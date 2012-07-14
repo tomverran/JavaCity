@@ -1,36 +1,35 @@
 package javacity;
+import javacity.lib.Component;
 import javacity.world.City;
-import javacity.output.StdOutput;
-import javacity.input.StdInput;
-import javacity.world.Tile;
+import javacity.ui.StdOutput;
+import javacity.ui.StdInput;
 import java.util.ArrayList;
+import javacity.game.component.Population;
+import javacity.game.observer.TileCost;
 
 /**
- *
+ * The main game class?
  * @author Tom
  */
 public class JavaCity 
 {
-
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
         
         City city = new City();
-        Tile tile = city.getByLocation(2, 2);
-        tile.setType("commercial");
         
-
+        //handle observer game components
+        city.registerTileObserver(new TileCost());
         
-        for (Tile t2 : city.getNeighbours(tile)) {
-            t2.setType("road");
-        }
-        
+        //handle per-cycle game components
         ArrayList<Component> components = new ArrayList<Component>();
         components.add(new StdInput(city));
         components.add(new StdOutput(city));
+        components.add(new Population(city));
         
+        //The Loop
         while (true) {
             for (Component component : components) {
                 component.tick();

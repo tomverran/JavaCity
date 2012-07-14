@@ -1,5 +1,5 @@
 package javacity.world;
-import javacity.library.Point;
+import javacity.lib.Point;
 import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.Observer;
@@ -48,7 +48,11 @@ public class City implements Observer
      */
     public ArrayList<Tile> getTilesByType(String type)
     {
-        return this.types.get(type);
+        if (this.types.containsKey(type)) {
+            return this.types.get(type);            
+        } else {
+            return new ArrayList<Tile>();
+        }
     }
     
     /**
@@ -130,6 +134,29 @@ public class City implements Observer
     public ArrayList<Tile> getNeighbours(Tile t)
     {
         return this.getNeighbours(t, 1);
+    }
+    
+    /**
+     * Register an observer to all tiles,
+     * listening for changes of their state
+     * @param o 
+     */
+    public void registerTileObserver(Observer o)
+    {
+        for (Tile t : this.locations.keySet()) {
+            t.addObserver(o);
+        }
+    }
+    
+    /**
+     * Remove an observer from all tiles.
+     * @param o 
+     */
+    public void removeTileObserver(Observer o)
+    {
+        for (Tile t : this.locations.keySet()) {
+            t.deleteObserver(o);
+        }        
     }
     
     /**
