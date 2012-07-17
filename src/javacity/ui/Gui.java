@@ -18,6 +18,7 @@ public class Gui extends JFrame {
         this.canvas = new GuiCanvas(c);
         this.setLayout(new BorderLayout());
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        this.setResizable(false);
 
         this.add(new GuiToolbox(),BorderLayout.WEST);
         

@@ -20,7 +20,8 @@ public class JavaCity
      */
     public static void main(String[] args) {
         
-        City city = new City();
+        City city = new City(20,15);
+        System.out.println(city.getXSize() + ", "+ city.getYSize());
         
         //handle observer game components
         city.registerTileObserver(new TileCost());
@@ -28,11 +29,12 @@ public class JavaCity
         //handle per-cycle game components
         ArrayList<Component> components = new ArrayList<Component>();
         components.add(new StdInput(city));
-        components.add(new StdOutput(city));
+
         components.add(new Population(city));
         components.add(new Workplace(city));
         
         Gui gui = new Gui(city);
+        gui.updateCanvas();
         
         //The Loop
         

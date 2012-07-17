@@ -7,9 +7,12 @@ import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
+import java.awt.Image;
+import java.io.File;
 import java.util.HashMap;
 import javacity.world.City;
 import javacity.world.Tile;
+import javax.imageio.ImageIO;
 
 /**
  *
@@ -18,23 +21,29 @@ import javacity.world.Tile;
 public class GuiCanvas extends Canvas {
     
     private City c;
-    private HashMap<String, Color> colours;
+    private HashMap<String, Image> images;
     
     public GuiCanvas(City c)
     {
         super();
         this.c = c;
         
-        colours = new HashMap<String,Color>();
-        colours.put("zone_r", Color.green);
-        colours.put("zone_c", Color.blue);
-        colours.put("zone_i", Color.yellow);   
-        colours.put("grass", Color.cyan);
+        try {
+            images = new HashMap<String,Image>();
+            images.put("zone_r", ImageIO.read(new File("zone_r.png")));
+            images.put("zone_c", ImageIO.read(new File("zone_c.png")));
+            images.put("zone_i", ImageIO.read(new File("zone_i.png")));   
+            images.put("grass",  ImageIO.read(new File("grass.png")));            
+        } catch (Exception e) {
+            System.out.println("fail");
+        }
+        
+
     }
     
     public void init()
     {
-        this.setPreferredSize(new Dimension(640,480));
+        this.setPreferredSize(new Dimension(c.getXSize()*32,c.getYSize()*32));
         this.setVisible(true);
         
         this.createBufferStrategy(2);
@@ -45,17 +54,16 @@ public class GuiCanvas extends Canvas {
     {
         Graphics2D g2 = (Graphics2D)this.getBufferStrategy().getDrawGraphics();
         
-        for (int x = 0; x < c.getSize()*32; x+=32) {
-            for (int y = 0; y < c.getSize()*32; y+=32) {
+        for (int x = 0; x < c.getXSize()*32; x+=32) {
+            for (int y = 0; y < c.getYSize()*32; y+=32) {
                 Tile t = c.getByLocation(x/32, y/32);
                 
-                if (this.colours.containsKey(t.getType())) {
-                    g2.setColor(this.colours.get(t.getType()));
+                if (this.images.containsKey(t.getType())) {
+                    g2.drawImage(this.images.get(t.getType()),x,y,this);
                 } else {
                     g2.setColor(Color.gray);
+                    g2.fillRect(x, y, 32, 32);
                 }
-                
-                g2.fillRect(x, y, 32, 32);
             }
         }
         

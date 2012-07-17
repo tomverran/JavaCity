@@ -22,16 +22,14 @@ public class City implements Observer
     /**
      * Construct our city.
      */
-    public City()
-    {
-        int size = 5;
-        
-        this.grid = new Tile[size][size];
+    public City(int xsize, int ysize)
+    {    
+        this.grid = new Tile[xsize][ysize];
         this.locations = new HashMap<Tile, Point>();
         this.types = new HashMap<String, ArrayList<Tile>>();
         
-        for (int x = 0; x < size; x++) {
-            for (int y = 0; y < size; y++) {
+        for (int x = 0; x < xsize; x++) {
+            for (int y = 0; y < ysize; y++) {
                 Tile t = new Tile();
                 this.grid[x][y] = t;
                 this.locations.put(t, new Point(x, y));
@@ -101,9 +99,14 @@ public class City implements Observer
      * Get the size of our city
      * @return int
      */
-    public int getSize()
+    public int getXSize()
     {
         return this.grid.length;
+    }
+    
+    public int getYSize()
+    {
+        return this.grid[0].length;
     }
     
     /**

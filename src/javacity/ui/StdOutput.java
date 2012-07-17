@@ -42,8 +42,8 @@ public class StdOutput extends Component {
     public void tick()
     {
         City c = this.getCity();
-        for(int y = 0; y < c.getSize(); y++) {
-            for (int x = 0; x < c.getSize(); x++) {
+        for(int y = 0; y < c.getXSize(); y++) {
+            for (int x = 0; x < c.getYSize(); x++) {
                 System.out.print(this.gfx.get(c.getByLocation(x, y).getType()));
             }
             System.out.println();
