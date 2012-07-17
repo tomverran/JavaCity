@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import javacity.game.component.Population;
 import javacity.game.component.Workplace;
 import javacity.game.observer.TileCost;
+import javacity.ui.Gui;
 
 /**
  * The main game class?
@@ -31,11 +32,17 @@ public class JavaCity
         components.add(new Population(city));
         components.add(new Workplace(city));
         
+        Gui gui = new Gui(city);
+        
         //The Loop
+        
         while (true) {
+            
             for (Component component : components) {
                 component.tick();
             }
+            
+            gui.updateCanvas();
         }
     }
 }
