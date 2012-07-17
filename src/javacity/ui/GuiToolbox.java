@@ -21,7 +21,7 @@ public class GuiToolbox extends JPanel implements MouseListener, ActionListener 
     
     private City city;
     
-    private JButton r, c, i, road;
+    private JButton r, c, i, road, grass;
     
     private String type;
     
@@ -37,17 +37,20 @@ public class GuiToolbox extends JPanel implements MouseListener, ActionListener 
         c = new JButton("Commercial");
         i = new JButton("Industrial");
         road = new JButton("Road");
+        grass = new JButton("Grass");
         
-        this.setLayout(new GridLayout(4,0));
+        this.setLayout(new GridLayout(5,0));
         this.add(r,0,0);
         this.add(c,1,0);
         this.add(i,2,0);   
         this.add(road,3,0);
+        this.add(grass,4,0);
         
         r.addActionListener(this);
         c.addActionListener(this);
         i.addActionListener(this);
         road.addActionListener(this);
+        grass.addActionListener(this);
         
         
     }
@@ -107,6 +110,8 @@ public class GuiToolbox extends JPanel implements MouseListener, ActionListener 
             this.type = "zone_i";
         } else if (e.getSource() == this.road) {
             this.type = "road";
+        } else if (e.getSource() == this.grass) {
+            this.type = "grass";
         }
     }
 }

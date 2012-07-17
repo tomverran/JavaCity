@@ -40,7 +40,7 @@ public class JavaCity
                 component.tick();
             }
             try {
-                Thread.sleep(17);                
+                Thread.sleep(1000);                
             } catch (Exception e) {
                 
             }

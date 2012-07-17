@@ -69,7 +69,6 @@ public class Workplace extends Component
                 if (zone_c.hasNext()) {
                     zone_c.next().setType("occupied_c");
                 } else {
-                                System.out.println(jobDemand);
                     zone_i.next().setType("occupied_i");
                 }
             }            
