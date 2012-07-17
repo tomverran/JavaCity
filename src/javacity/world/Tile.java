@@ -7,17 +7,6 @@ import java.util.Observable;
 public class Tile extends Observable 
 {
     private String type;
-    
-    public static final String OCCUPIED_R = "occupied_r";
-    public static final String OCCUPIED_C = "occupied_c";
-    public static final String OCCUPIED_I = "occupied_i";
-    
-    public static final String ZONE_R = "occupied_r";
-    public static final String ZONE_C = "occupied_c";
-    public static final String ZONE_I = "occupied_i";
-    
-    public static final String HOSPITAL = "hospital";    
-    
  
     /**
      * Set our type

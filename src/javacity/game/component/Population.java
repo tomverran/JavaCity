@@ -18,29 +18,20 @@ public class Population extends Component {
     @Override
     public void tick()
     {
-
         //find number of hospitals + number of residents
-        int hospitals = this.getCity().getTilesByType("hospital").size();
         int population = this.getCity().getTilesByType("occupied_r").size();
-        
-        //base birth rate, based on UK figure
-        int growth = (int)Math.round(population * 0.13);
+        int growth = 0;
         
         //find number of jobs available
-        int jobs = this.getCity().getTilesByType("occupied_c").size();
-        jobs += this.getCity().getTilesByType("occupied_i").size();
-        
-        //one hospital per 10 people for base growth
-        growth *= (hospitals * 10 / Math.max(1, population));
-        
+        int jobs = this.getCity().getTilesByType("zone_c").size();
+        jobs += this.getCity().getTilesByType("zone_i").size();
+
         //one family moves in per tick if times are good
         if (jobs > population) {
             growth += 4;
         } else if (jobs < population) {
-            growth -= 4; //times are bad
+            growth -= 2;
         }
-
-        System.out.println("growth "+growth);
         
         if (growth > 0) {
             

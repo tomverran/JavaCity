@@ -5,6 +5,7 @@ import javacity.ui.StdOutput;
 import javacity.ui.StdInput;
 import java.util.ArrayList;
 import javacity.game.component.Population;
+import javacity.game.component.Workplace;
 import javacity.game.observer.TileCost;
 
 /**
@@ -28,6 +29,7 @@ public class JavaCity
         components.add(new StdInput(city));
         components.add(new StdOutput(city));
         components.add(new Population(city));
+        components.add(new Workplace(city));
         
         //The Loop
         while (true) {

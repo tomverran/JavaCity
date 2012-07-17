@@ -49,7 +49,7 @@ public class City implements Observer
     public ArrayList<Tile> getTilesByType(String type)
     {
         if (this.types.containsKey(type)) {
-            return this.types.get(type);            
+            return (ArrayList<Tile>)this.types.get(type).clone();            
         } else {
             return new ArrayList<Tile>();
         }
