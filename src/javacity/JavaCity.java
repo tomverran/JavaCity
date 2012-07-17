@@ -28,7 +28,7 @@ public class JavaCity
         
         //handle per-cycle game components
         ArrayList<Component> components = new ArrayList<Component>();
-        components.add(new StdInput(city));
+
 
         components.add(new Population(city));
         components.add(new Workplace(city));
@@ -43,7 +43,12 @@ public class JavaCity
             for (Component component : components) {
                 component.tick();
             }
-            
+            try {
+                Thread.sleep(17);                
+            } catch (Exception e) {
+                
+            }
+
             gui.updateCanvas();
         }
     }

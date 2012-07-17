@@ -10,19 +10,22 @@ import javax.swing.JFrame;
 public class Gui extends JFrame {
     
     private GuiCanvas canvas;
+    private GuiToolbox tools;
     
     public Gui(City c)
     {
         super();
         this.setVisible(true);
         this.canvas = new GuiCanvas(c);
+        this.tools = new GuiToolbox(c);
         this.setLayout(new BorderLayout());
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setResizable(false);
 
-        this.add(new GuiToolbox(),BorderLayout.WEST);
+        this.add(this.tools,BorderLayout.WEST);
         
         this.add(this.canvas,BorderLayout.CENTER);
+        this.canvas.addMouseListener(this.tools);
         this.canvas.init();
         this.pack();
 

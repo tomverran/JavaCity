@@ -33,7 +33,14 @@ public class GuiCanvas extends Canvas {
             images.put("zone_r", ImageIO.read(new File("zone_r.png")));
             images.put("zone_c", ImageIO.read(new File("zone_c.png")));
             images.put("zone_i", ImageIO.read(new File("zone_i.png")));   
-            images.put("grass",  ImageIO.read(new File("grass.png")));            
+            
+            images.put("grass",  ImageIO.read(new File("grass.png")));   
+            images.put("road",  ImageIO.read(new File("road.png")));   
+            
+            images.put("occupied_r", ImageIO.read(new File("occupied_r.png")));
+            images.put("occupied_c", ImageIO.read(new File("occupied_c.png")));
+            images.put("occupied_i", ImageIO.read(new File("occupied_i.png")));   
+            
         } catch (Exception e) {
             System.out.println("fail");
         }
