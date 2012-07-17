@@ -25,6 +25,8 @@ public class GuiToolbox extends JPanel implements MouseListener, ActionListener 
     
     private String type;
     
+    private int dragX, dragY;
+    
     public GuiToolbox(City city)
     {
         super();
@@ -65,22 +67,33 @@ public class GuiToolbox extends JPanel implements MouseListener, ActionListener 
     @Override
     public void mouseReleased(MouseEvent e)
     {
+        int curX = e.getX() / 32;
+        int curY = e.getY() / 32;
+        
+        int startx = Math.min(curX, this.dragX);
+        int endx = Math.max(curX, this.dragX);
+        
+        int starty = Math.min(curY, this.dragY);
+        int endy = Math.max(curY, this.dragY);
+        
+        for (int x = startx; x <= endx; x++) {
+            for (int y = starty; y <= endy; y++) {
+                this.city.getByLocation(x, y).setType(this.type);                
+            }
+        }
         
     }
     
     @Override
     public void mousePressed(MouseEvent e)
     {
-        
+        this.dragX = e.getX() / 32;
+        this.dragY = e.getY() / 32;
     }
     
     @Override
     public void mouseClicked(MouseEvent e)
     {
-        int x = e.getX() / 32;
-        int y = e.getY() / 32;
-        
-        this.city.getByLocation(x, y).setType(this.type);
     }
     
     @Override

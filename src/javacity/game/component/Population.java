@@ -20,17 +20,23 @@ public class Population extends Component {
     {
         //find number of hospitals + number of residents
         int population = this.getCity().getTilesByType("occupied_r").size();
+        int housingspaces = this.getCity().getTilesByType("zone_r").size();
         int growth = 0;
         
         //find number of jobs available
-        int jobs = this.getCity().getTilesByType("zone_c").size();
-        jobs += this.getCity().getTilesByType("zone_i").size();
+        int jobspaces = this.getCity().getTilesByType("zone_c").size();
+        jobspaces += this.getCity().getTilesByType("zone_i").size();
+        
+        //find number of jobs taken
+        int jobs = this.getCity().getTilesByType("occupied_c").size();
+        jobs += this.getCity().getTilesByType("occupied_i").size();        
 
         //one family moves in per tick if times are good
-        if (jobs > population) {
-            growth += 4;
+        if (jobspaces > 0) {
+            growth = Math.min(jobspaces, housingspaces);
         } else if (jobs < population) {
-            growth -= 2;
+            growth = Math.max(jobs-population,-2);
+            System.out.println(jobs + "-" + population);
         }
         
         if (growth > 0) {
@@ -46,7 +52,7 @@ public class Population extends Component {
                 growth--;
                 i++;
             }            
-        } else {
+        } else if (growth < 0) {
             
             //desert some residential zones if our population is shrinking
             ArrayList<Tile> houses = this.getCity().getTilesByType("occupied_r");

@@ -38,13 +38,14 @@ public class Workplace extends Component
         int countIndustry = occupied_i.size();
         
         //how many free job slots are there.
-        int jobDemand = population - countCommercial + countIndustry;
+        int jobDemand = population - (countCommercial + countIndustry);
 
         if (jobDemand < 0) {
             
             //more jobs than people? Industries close first, then commercial.
             while (jobDemand < 0 && countIndustry > 0 && countCommercial > 0) {
-
+                
+                jobDemand++;
                 if (countIndustry > 0) {
                     occupied_i.iterator().next().setType("zone_i");
                     countIndustry--;
@@ -62,10 +63,13 @@ public class Workplace extends Component
 
             //more jobs than people? People would prefer a cushy
             //desk job over a hard factory job, but will take either
-            while (jobDemand > 0 && zone_i.hasNext() && zone_c.hasNext()) {
+            while (jobDemand > 0 && (zone_i.hasNext() || zone_c.hasNext())) {
+                
+                jobDemand--;
                 if (zone_c.hasNext()) {
                     zone_c.next().setType("occupied_c");
                 } else {
+                                System.out.println(jobDemand);
                     zone_i.next().setType("occupied_i");
                 }
             }            

@@ -74,6 +74,8 @@ public class GuiCanvas extends Canvas {
             }
         }
         
+
+        
         this.getBufferStrategy().show();
     }
     
