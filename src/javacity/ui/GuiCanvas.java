@@ -73,9 +73,6 @@ public class GuiCanvas extends Canvas implements Runnable {
                 }
             }
         }
-        
-
-        
         this.getBufferStrategy().show();
     }
     
@@ -87,9 +84,10 @@ public class GuiCanvas extends Canvas implements Runnable {
     public void run()
     {
         while (true) {       
-            //draw at a multiple of 100 FPS.
-            if (System.currentTimeMillis() % 10 == 0) {
-                draw();
+            draw();
+            try {
+                Thread.sleep(20);                    
+            } catch (InterruptedException e) {
             }
         }
     }

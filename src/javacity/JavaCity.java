@@ -20,6 +20,7 @@ public class JavaCity
     public static void main(String[] args) 
     {    
         City city = new City(20,15);
+        Simulation sim = new Simulation();
         
         //handle observer game components
         city.registerTileObserver(new TileCost());
@@ -29,20 +30,13 @@ public class JavaCity
         Gui gui = new Gui(city);
                 
         //handle per-cycle game components
-        ArrayList<Component> components = new ArrayList<Component>();
+        sim.addComponent(new Residential(city));
+        sim.addComponent(new Commercial(city));
+        sim.addComponent(new Industrial(city));
+        sim.addComponent(gui);
 
-        components.add(new Residential(city));
-        components.add(new Commercial(city));
-        components.add(new Industrial(city));
-        components.add(gui);
-
-        //The Loop
-        while (true) {
-            if (System.currentTimeMillis() % 1000 == 0) {
-                for (Component component : components) {
-                    component.tick();
-                }                
-            }
-        }
+        //run our simulation thread.
+        Thread simthread = new Thread(sim);
+        simthread.start();
     }
 }
