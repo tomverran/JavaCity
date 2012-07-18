@@ -2,8 +2,9 @@ package javacity;
 import javacity.lib.Component;
 import javacity.world.City;
 import java.util.ArrayList;
-import javacity.game.component.Population;
-import javacity.game.component.Workplace;
+import javacity.game.component.Commercial;
+import javacity.game.component.Industrial;
+import javacity.game.component.Residential;
 import javacity.game.observer.TileCost;
 import javacity.ui.Gui;
 
@@ -26,8 +27,9 @@ public class JavaCity
         //handle per-cycle game components
         ArrayList<Component> components = new ArrayList<Component>();
 
-        components.add(new Population(city));
-        components.add(new Workplace(city));
+        components.add(new Residential(city));
+        components.add(new Commercial(city));
+        components.add(new Industrial(city));
 
         //construct our GUI, which handles itself
         //constructing animation threads etc.
@@ -35,7 +37,7 @@ public class JavaCity
         
         //The Loop
         while (true) {
-            if (System.currentTimeMillis() % 10000 == 0) {
+            if (System.currentTimeMillis() % 1000 == 0) {
                 for (Component component : components) {
                     component.tick();
                 }                

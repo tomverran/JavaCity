@@ -13,8 +13,15 @@ public class Metrics {
         return c.getTilesByType("occupied_r").size();
     }
     
-    public static int jobSpaces(City c)
+    public static int availableJobs(City c)
     {
-        return c.getTilesByType("zone_i").size() + c.getTilesByType("zone_c").size();
+        return c.getTilesByType("zone_i").size() + 
+               c.getTilesByType("zone_c").size();
+    }
+    
+    public static int occupiedJobs(City c)
+    {
+        return c.getTilesByType("occupied_i").size() + 
+               c.getTilesByType("occupied_c").size();        
     }
 }
