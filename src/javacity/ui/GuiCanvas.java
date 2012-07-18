@@ -18,7 +18,7 @@ import javax.imageio.ImageIO;
  *
  * @author Tom
  */
-public class GuiCanvas extends Canvas {
+public class GuiCanvas extends Canvas implements Runnable {
     
     private City c;
     private HashMap<String, Image> images;
@@ -79,4 +79,18 @@ public class GuiCanvas extends Canvas {
         this.getBufferStrategy().show();
     }
     
+    /**
+     * Run our animation thread
+     * that constantly redraws the city.
+     */
+    @Override
+    public void run()
+    {
+        while (true) {       
+            //draw at a multiple of 100 FPS.
+            if (System.currentTimeMillis() % 10 == 0) {
+                draw();
+            }
+        }
+    }
 }

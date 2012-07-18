@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.Observer;
 import java.util.Observable;
+import java.util.Random;
 
 /**
  * A city can be thought of as a map for the city to reside in.
@@ -15,6 +16,7 @@ import java.util.Observable;
  */
 public class City implements Observer
 {
+    private Random r;
     private Tile[][] grid;
     private HashMap<Tile, Point> locations;
     private HashMap<String, ArrayList<Tile>> types;
@@ -24,6 +26,7 @@ public class City implements Observer
      */
     public City(int xsize, int ysize)
     {    
+        r = new Random();
         this.grid = new Tile[xsize][ysize];
         this.locations = new HashMap<Tile, Point>();
         this.types = new HashMap<String, ArrayList<Tile>>();
@@ -50,6 +53,20 @@ public class City implements Observer
             return (ArrayList<Tile>)this.types.get(type).clone();            
         } else {
             return new ArrayList<Tile>();
+        }
+    }
+    
+    /**
+     * Switch the type of a random tile of type from, to type of type to.
+     * Clear as mud, right. Used for occupying / deserting zones.
+     * @param string from
+     * @param string to 
+     */
+    public void switchTypeOfRandom(String from, String to)
+    {
+        ArrayList<Tile> tiles = this.getTilesByType(from);
+        if (tiles.size() > 0) {
+            tiles.get(r.nextInt(tiles.size())).setType(to);           
         }
     }
     

@@ -28,24 +28,18 @@ public class JavaCity
 
         components.add(new Population(city));
         components.add(new Workplace(city));
-        
+
+        //construct our GUI, which handles itself
+        //constructing animation threads etc.
         Gui gui = new Gui(city);
-        gui.updateCanvas();
         
         //The Loop
-        
         while (true) {
-            
-            for (Component component : components) {
-                component.tick();
+            if (System.currentTimeMillis() % 10000 == 0) {
+                for (Component component : components) {
+                    component.tick();
+                }                
             }
-            try {
-                Thread.sleep(1000);                
-            } catch (Exception e) {
-                
-            }
-
-            gui.updateCanvas();
         }
     }
 }

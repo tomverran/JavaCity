@@ -19,39 +19,33 @@ public class Gui extends JFrame {
     public Gui(City c)
     {
         super();
+        
         this.city = c;
-        this.setVisible(true);
         this.canvas = new GuiCanvas(c);
         this.tools = new GuiToolbox(c);
         this.pop = new JLabel("Population: 0");
         
+        //set our properties.
         this.setLayout(new BorderLayout());
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        this.setLocationRelativeTo(null);
+        this.setTitle("JavaCity");
         this.setResizable(false);
 
+        //add the GUI elements to our frame
         this.add(this.tools,BorderLayout.WEST);
-        
         this.add(this.canvas,BorderLayout.CENTER);
         this.add(this.pop,BorderLayout.SOUTH);
+        this.setVisible(true);
         
+        //initialise our Canvas, must be done afer adding for bufferStrategy
         this.canvas.addMouseListener(this.tools);
         this.canvas.init();
         this.pack();
 
-        this.setLocationRelativeTo(null);
-        this.setTitle("JavaCity");
-    }
-    
-    public void updateCanvas()
-    {
-        this.canvas.draw();
-        this.pop.setText("Population: "+Metrics.population(this.city));
-    }
-    
-    public void repaint()
-    {
-        super.repaint();
-        this.canvas.draw();
-    }
-    
+        
+        //begin our animation loop.
+        Thread animator = new Thread(canvas);
+        animator.start();
+    }    
 }
