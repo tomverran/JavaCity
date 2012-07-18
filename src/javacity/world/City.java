@@ -109,7 +109,7 @@ public class City implements Observer
      */
     public Boolean isValidLocation(int x, int y)
     {
-        return (x > 0 && x < this.grid.length && y > 0 && y < this.grid.length);
+        return (x > 0 && x < this.grid.length && y > 0 && y < this.grid[0].length);
     }
     
     /**

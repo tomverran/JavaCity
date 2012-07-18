@@ -81,7 +81,9 @@ public class GuiToolbox extends JPanel implements MouseListener, ActionListener 
         
         for (int x = startx; x <= endx; x++) {
             for (int y = starty; y <= endy; y++) {
-                this.city.getByLocation(x, y).setType(this.type);                
+                if (this.city.isValidLocation(x, y)) {
+                    this.city.getByLocation(x, y).setType(this.type);                    
+                }
             }
         }
         
