@@ -16,8 +16,8 @@ public class Industrial extends TileGrowth
     @Override
     public float getGrowthModifier()
     {
-        int population = Metrics.population(this.getCity());
-        int industrial = this.getCity().getTilesByType("occupied_i").size();
+        int population = Metrics.population(this.city);
+        int industrial = this.city.getTilesByType("occupied_i").size();
         return industrial > population ? -0.2f : 0.2f;  
     }
     

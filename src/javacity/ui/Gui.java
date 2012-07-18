@@ -1,5 +1,6 @@
 package javacity.ui;
 import java.awt.BorderLayout;
+import javacity.lib.Component;
 import javacity.world.City;
 import javacity.world.Metrics;
 import javax.swing.JFrame;
@@ -9,13 +10,18 @@ import javax.swing.JLabel;
  * A prettier GUI
  * @author Tom
  */
-public class Gui extends JFrame {
+public class Gui extends JFrame implements Component {
     
     private GuiCanvas canvas;
     private GuiToolbox tools;
     private JLabel pop;
     private City city;
     
+    /**
+     * Initialise our GUI, assembling a Canvas for drawing
+     * and a Toolbox for event handling. Start the animation thread.
+     * @param c 
+     */
     public Gui(City c)
     {
         super();
@@ -46,6 +52,16 @@ public class Gui extends JFrame {
         
         //begin our animation loop.
         Thread animator = new Thread(canvas);
-        animator.start();
+        animator.start(); //shut up netbeans, its fine.
     }    
+    
+    /**
+     * Update the population label
+     * on each tick of the simulation
+     */
+    @Override
+    public void tick()
+    {
+        this.pop.setText("Population: "+Metrics.population(city));
+    }
 }

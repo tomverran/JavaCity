@@ -23,18 +23,19 @@ public class JavaCity
         
         //handle observer game components
         city.registerTileObserver(new TileCost());
-        
+
+        //construct our GUI, which handles itself
+        //constructing animation threads etc.
+        Gui gui = new Gui(city);
+                
         //handle per-cycle game components
         ArrayList<Component> components = new ArrayList<Component>();
 
         components.add(new Residential(city));
         components.add(new Commercial(city));
         components.add(new Industrial(city));
+        components.add(gui);
 
-        //construct our GUI, which handles itself
-        //constructing animation threads etc.
-        Gui gui = new Gui(city);
-        
         //The Loop
         while (true) {
             if (System.currentTimeMillis() % 1000 == 0) {

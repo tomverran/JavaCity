@@ -24,13 +24,13 @@ public class Residential extends TileGrowth {
     public float getGrowthModifier()
     {
         //find number of residents
-        int population = Metrics.population(this.getCity());
+        int population = Metrics.population(this.city);
         
         //find number of jobs available
-        int jobspaces = Metrics.availableJobs(this.getCity());
+        int jobspaces = Metrics.availableJobs(this.city);
         
         //find number of jobs taken, adjust growth accordingly
-        int jobs = Metrics.occupiedJobs(this.getCity()); 
+        int jobs = Metrics.occupiedJobs(this.city); 
 
         if (jobspaces > 0) {
             return 0.2f;

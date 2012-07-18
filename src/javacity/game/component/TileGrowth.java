@@ -12,8 +12,9 @@ import javacity.world.City;
  *
  * @author Tom
  */
-public abstract class TileGrowth extends Component {
-    
+public abstract class TileGrowth implements Component 
+{
+    protected City city;
     private static Random r;
     private String zone;
     private String occupied;
@@ -30,7 +31,7 @@ public abstract class TileGrowth extends Component {
      */
     public TileGrowth(City c, String zone, String occupied)
     {
-        super(c);
+        this.city = c;
         this.zone = zone;
         this.occupied = occupied;
     }
@@ -39,15 +40,16 @@ public abstract class TileGrowth extends Component {
      * Run every simulation iteration,
      * grow tiles based on our stuff
      */
+    @Override
     public void tick()
     {
         float growth = r.nextFloat() - 0.5f;
         growth += this.getGrowthModifier();
         
         if (growth > 0.4) {
-            this.getCity().switchTypeOfRandom(this.zone, this.occupied);
+            this.city.switchTypeOfRandom(this.zone, this.occupied);
         } else if (growth < -0.4) {
-            this.getCity().switchTypeOfRandom(this.occupied, this.zone);             
+            this.city.switchTypeOfRandom(this.occupied, this.zone);             
         }
         
     }

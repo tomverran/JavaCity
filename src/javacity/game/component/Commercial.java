@@ -20,9 +20,9 @@ public class Commercial extends TileGrowth
     @Override
     public float getGrowthModifier()
     {
-        int population = Metrics.population(this.getCity());
-        int commercial = this.getCity().getTilesByType("occupied_c").size();
-        int industrial = this.getCity().getTilesByType("occupied_i").size();
+        int population = Metrics.population(this.city);
+        int commercial = this.city.getTilesByType("occupied_c").size();
+        int industrial = this.city.getTilesByType("occupied_i").size();
         
         //a commercial place requires two industrial buildings for supply
         boolean balanceOkay = (commercial + 1) * 2 < industrial;
