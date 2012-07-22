@@ -1,6 +1,6 @@
 package javacity.game.component;
 import javacity.world.City;
-import javacity.world.Metrics;
+import javacity.world.data.Zone;
 
 /**
  * Class to handle population growth / decline
@@ -12,7 +12,7 @@ public class Residential extends TileGrowth {
     
     public Residential(City c)
     {
-        super(c, "zone_r", "occupied_r");
+        super(c, Zone.RESIDENTIAL);
     }
     
     /**
@@ -24,13 +24,13 @@ public class Residential extends TileGrowth {
     public float getGrowthModifier()
     {
         //find number of residents
-        int population = Metrics.population(this.city);
+        int population = this.city.population();
         
         //find number of jobs available
-        int jobspaces = Metrics.availableJobs(this.city);
+        int jobspaces = this.city.availableJobs();
         
         //find number of jobs taken, adjust growth accordingly
-        int jobs = Metrics.occupiedJobs(this.city); 
+        int jobs = this.city.occupiedJobs(); 
 
         if (jobspaces > 0) {
             return 0.2f;

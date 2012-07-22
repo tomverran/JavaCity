@@ -1,8 +1,8 @@
 package javacity.ui;
 import java.awt.BorderLayout;
 import javacity.lib.Component;
+import javacity.world.Map;
 import javacity.world.City;
-import javacity.world.Metrics;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
@@ -15,14 +15,14 @@ public class Gui extends JFrame implements Component {
     private GuiCanvas canvas;
     private GuiToolbox tools;
     private JLabel pop;
-    private City city;
+    private Map city;
     
     /**
      * Initialise our GUI, assembling a Canvas for drawing
      * and a Toolbox for event handling. Start the animation thread.
      * @param c 
      */
-    public Gui(City c)
+    public Gui(Map c)
     {
         super();
         
@@ -62,6 +62,6 @@ public class Gui extends JFrame implements Component {
     @Override
     public void tick()
     {
-        this.pop.setText("Population: "+Metrics.population(city));
+        //this.pop.setText("Population: "+this.city.population());
     }
 }

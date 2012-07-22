@@ -1,10 +1,6 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package javacity.game.component;
 import javacity.world.City;
-import javacity.world.Metrics;
+import javacity.world.data.Zone;
 
 /**
  * Class to handle growth and decline of commercial tiles.
@@ -14,15 +10,15 @@ public class Commercial extends TileGrowth
 {
     public Commercial(City c)
     {
-        super(c, "zone_c", "occupied_c");
+        super(c, Zone.COMMERCIAL);
     }
     
     @Override
     public float getGrowthModifier()
     {
-        int population = Metrics.population(this.city);
-        int commercial = this.city.getTilesByType("occupied_c").size();
-        int industrial = this.city.getTilesByType("occupied_i").size();
+        int population = this.city.population();
+        int commercial = this.city.populationOf(Zone.COMMERCIAL);
+        int industrial = this.city.populationOf(Zone.INDUSTRIAL);
         
         //a commercial place requires two industrial buildings for supply
         boolean balanceOkay = (commercial + 1) * 2 < industrial;

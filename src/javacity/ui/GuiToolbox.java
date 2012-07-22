@@ -9,7 +9,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import javacity.world.City;
+import javacity.world.Map;
+import javacity.world.data.Zone;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
@@ -19,19 +20,19 @@ import javax.swing.JPanel;
  */
 public class GuiToolbox extends JPanel implements MouseListener, ActionListener {
     
-    private City city;
+    private Map city;
     
     private JButton r, c, i, road, grass;
     
-    private String type;
+    private Zone type;
     
     private int dragX, dragY;
     
-    public GuiToolbox(City city)
+    public GuiToolbox(Map city)
     {
         super();
         this.city = city;
-        this.type = "zone_r";
+        this.type = Zone.RESIDENTIAL;
         
         r = new JButton("Residential");
         c = new JButton("Commercial");
@@ -105,15 +106,15 @@ public class GuiToolbox extends JPanel implements MouseListener, ActionListener 
     public void actionPerformed(ActionEvent e)
     {
         if (e.getSource() == this.r) {
-            this.type ="zone_r";
+            this.type = Zone.RESIDENTIAL;
         } else if (e.getSource() == this.c) {
-            this.type = "zone_c";
+            this.type = Zone.COMMERCIAL;
         } else if (e.getSource() == this.i) {
-            this.type = "zone_i";
+            this.type = Zone.INDUSTRIAL;
         } else if (e.getSource() == this.road) {
-            this.type = "road";
+            this.type = Zone.ROAD;
         } else if (e.getSource() == this.grass) {
-            this.type = "grass";
+            this.type = Zone.GRASS;
         }
     }
 }
