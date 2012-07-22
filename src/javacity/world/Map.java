@@ -1,6 +1,4 @@
 package javacity.world;
-import javacity.world.data.Zone;
-import javacity.world.data.Flag;
 import javacity.lib.Point;
 import java.util.HashMap;
 import java.util.ArrayList;
@@ -23,10 +21,8 @@ public class Map implements Observer
     private Random r;
     private Tile[][] grid;
     private HashMap<Tile, Point> locations;
-    private EnumMap<Zone, ArrayList<Tile>> types;
+    private EnumMap<Tile.Zone, ArrayList<Tile>> types;
 
-
-    
     /**
      * Construct our city.
      */
@@ -35,7 +31,7 @@ public class Map implements Observer
         r = new Random();
         this.grid = new Tile[xsize][ysize];
         this.locations = new HashMap<Tile, Point>();
-        this.types = new EnumMap<Zone, ArrayList<Tile>>(Zone.class);
+        this.types = new EnumMap<Tile.Zone, ArrayList<Tile>>(Tile.Zone.class);
         
         for (int x = 0; x < xsize; x++) {
             for (int y = 0; y < ysize; y++) {
@@ -43,7 +39,7 @@ public class Map implements Observer
                 this.grid[x][y] = t;
                 this.locations.put(t, new Point(x, y));
                 t.addObserver(this);
-                t.setType(Zone.GRASS);
+                t.setType(Tile.Zone.GRASS);
             }
         }
     }
@@ -53,7 +49,7 @@ public class Map implements Observer
      * @param string type the type of the tile
      * @return ArrayList<Tile>
      */
-    public ArrayList<Tile> getTilesByType(Zone type)
+    private ArrayList<Tile> getTilesByType(Tile.Zone type)
     {
         if (this.types.containsKey(type)) {
             return (ArrayList<Tile>)this.types.get(type).clone();            
@@ -183,14 +179,132 @@ public class Map implements Observer
             
             Tile t = (Tile)o;
             if (args != null) {
-                Zone oldType = (Zone)args;
+                Tile.Zone oldType = (Tile.Zone)args;
                 this.types.get(oldType).remove(t);
             }
-            Zone type = t.getType();
+            Tile.Zone type = t.getType();
             if (!this.types.containsKey(type)) {
                 this.types.put(type, new ArrayList<Tile>());
             }
             this.types.get(type).add(t);            
+        }
+    }
+    
+/**
+ * A class to provide a richer
+ * querying interface to a Map.
+ * @author Tom
+ */
+public class Query 
+{
+    private EnumSet<Tile.Zone> selectTypes;
+    private EnumSet<Tile.Flag> selectFlags;
+    private EnumSet<Tile.Flag> selectNotFlags;  
+    
+        /**
+         * Create our query
+         * @param m The map to query 
+         */
+        public Query()
+        {
+            this.selectTypes = EnumSet.noneOf(Tile.Zone.class);
+            this.selectFlags = EnumSet.noneOf(Tile.Flag.class);
+            this.selectNotFlags = EnumSet.noneOf(Tile.Flag.class);
+        }
+
+        /**
+         * Add a flag criteria
+         * @param flag
+         * @return 
+         */
+        public Query withFlag(Tile.Flag flag)
+        {
+            this.selectFlags.add(flag);
+            return this;
+        }
+
+        /**
+         * Add a without flag criteria
+         * @param flag
+         * @return 
+         */
+        public Query withoutFlag(Tile.Flag flag)
+        {
+            this.selectNotFlags.add(flag);
+            return this;
+        }
+
+        /**
+         * Add a type criteria
+         * @param type
+         * @return 
+         */
+        public Query withType(Tile.Zone type)
+        {
+            this.selectTypes.add(type);
+            return this;
+        }
+
+        /**
+         * Fetch all tiles matching the criteria
+         * @return an array of tiles
+         */
+        public ArrayList<Tile> fetchAll()
+        {
+            ArrayList<Tile> tiles = new ArrayList<Tile>();
+            ArrayList<Tile> append;
+
+            for (Tile.Zone zone : this.selectTypes) {
+
+                append = getTilesByType(zone);
+                if (this.selectFlags.size() > 0 || this.selectNotFlags.size() > 0) {
+                    for (Tile tile : append) {
+                        boolean okay = true;
+                        for (Tile.Flag flag: this.selectFlags) {
+                            if (!tile.hasFlag(flag)) {
+                                okay = false;
+                                break;
+                            }
+                        }
+                        for (Tile.Flag flag : this.selectNotFlags) {
+                            if (tile.hasFlag(flag)) {
+                                okay = false;
+                                break;
+                            }
+                        }
+                        if (!okay) {
+                            continue;
+                        }
+                        tiles.add(tile);
+                    }                
+                } else {
+                    tiles.addAll(append);
+                }
+            }
+            return tiles;
+        }
+
+        /**
+         * Fetch the number of tiles matching the criteria
+         * @return the count of the tiles
+         */
+        public int fetchCount()
+        {
+            return this.fetchAll().size();
+        }
+
+        /**
+         * Fetch a random tile matching the criteria
+         * @return a random tile
+         */
+        public Tile fetchRandom()
+        {
+            ArrayList<Tile> tiles = this.fetchAll();
+            if (tiles.size() > 0) {
+                return tiles.get(r.nextInt(tiles.size()));   
+            } else {
+                return null;
+            }
         }
     }
 }

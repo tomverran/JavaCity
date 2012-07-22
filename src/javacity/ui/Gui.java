@@ -2,7 +2,6 @@ package javacity.ui;
 import java.awt.BorderLayout;
 import javacity.lib.Component;
 import javacity.world.Map;
-import javacity.world.City;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
@@ -12,8 +11,8 @@ import javax.swing.JLabel;
  */
 public class Gui extends JFrame implements Component {
     
-    private GuiCanvas canvas;
-    private GuiToolbox tools;
+    private Viewport canvas;
+    private Toolbox tools;
     private JLabel pop;
     private Map city;
     
@@ -27,8 +26,8 @@ public class Gui extends JFrame implements Component {
         super();
         
         this.city = c;
-        this.canvas = new GuiCanvas(c);
-        this.tools = new GuiToolbox(c);
+        this.canvas = new Viewport(c);
+        this.tools = new Toolbox(c);
         this.pop = new JLabel("Population: 0");
         
         //set our properties.

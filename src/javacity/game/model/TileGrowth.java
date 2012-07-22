@@ -2,22 +2,19 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package javacity.game.component;
+package javacity.game.model;
 
 import java.util.Random;
-import javacity.lib.Component;
-import javacity.world.City;
-import javacity.world.data.Zone;
+import javacity.world.Tile;
 
 /**
  *
  * @author Tom
  */
-public abstract class TileGrowth implements Component 
+public abstract class TileGrowth extends AbstractModel
 {
-    protected City city;
     private static Random r;
-    private Zone zone;
+    private Tile.Zone zone;
     
     static {
         r = new Random();
@@ -29,9 +26,8 @@ public abstract class TileGrowth implements Component
      * @param String zone type of the empty tile
      * @param String occupied type of the tile when occupied 
      */
-    public TileGrowth(City c, Zone zone)
+    public TileGrowth(Tile.Zone zone)
     {
-        this.city = c;
         this.zone = zone;
     }
     
@@ -46,9 +42,9 @@ public abstract class TileGrowth implements Component
         growth += this.getGrowthModifier();
         
         if (growth > 0.4) {
-            this.city.occupy(zone);
+            this.occupy(zone);
         } else if (growth < -0.4) {
-            this.city.desert(zone);    
+            this.desert(zone);    
         }
         
     }

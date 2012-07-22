@@ -1,6 +1,4 @@
 package javacity.world;
-import javacity.world.data.Zone;
-import javacity.world.data.Flag;
 import java.util.EnumSet;
 import java.util.Observable;
 /**
@@ -9,6 +7,54 @@ import java.util.Observable;
  */
 public class Tile extends Observable 
 {
+    public static enum Flag {
+
+        OCCUPIED("Occupied"),
+        POWERED("Has Electricity");
+
+        private String name;
+
+        /**
+         * Initialise a new flag.
+         * @param name 
+         */
+        private Flag(String name)
+        {
+            this.name = name;
+        }
+
+        /**
+         * Get the name of this Flag
+         * @return String
+         */
+        @Override
+        public String toString()
+        {
+            return this.name;
+        }
+    }    
+    
+    public static enum Zone {
+        COMMERCIAL("Commercial"), 
+        RESIDENTIAL("Residential"),
+        INDUSTRIAL("Industrial"),
+        POWERPLANT("Power Plant"),
+        GRASS("Grass"),
+        ROAD("Road");
+
+        private String name;
+
+        private Zone(String name) {
+            this.name = name;
+        }
+
+        @Override
+        public String toString()
+        {
+            return this.name;
+        }
+    }
+
     private Zone type;
     private EnumSet<Flag> flags;
     

@@ -1,6 +1,5 @@
-package javacity.game.component;
-import javacity.world.City;
-import javacity.world.data.Zone;
+package javacity.game.model;
+import javacity.world.Tile;
 
 /**
  * Class to handle growth and decline of commercial tiles.
@@ -8,17 +7,17 @@ import javacity.world.data.Zone;
  */
 public class Commercial extends TileGrowth
 {
-    public Commercial(City c)
+    public Commercial()
     {
-        super(c, Zone.COMMERCIAL);
+        super(Tile.Zone.COMMERCIAL);
     }
     
     @Override
     public float getGrowthModifier()
     {
-        int population = this.city.population();
-        int commercial = this.city.populationOf(Zone.COMMERCIAL);
-        int industrial = this.city.populationOf(Zone.INDUSTRIAL);
+        int population = this.population();
+        int commercial = this.populationOf(Tile.Zone.COMMERCIAL);
+        int industrial = this.populationOf(Tile.Zone.INDUSTRIAL);
         
         //a commercial place requires two industrial buildings for supply
         boolean balanceOkay = (commercial + 1) * 2 < industrial;

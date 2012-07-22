@@ -10,7 +10,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import javacity.world.Map;
-import javacity.world.data.Zone;
+import javacity.world.Tile;
+import javacity.world.Tile.Zone;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
@@ -18,42 +19,33 @@ import javax.swing.JPanel;
  *
  * @author Tom
  */
-public class GuiToolbox extends JPanel implements MouseListener, ActionListener {
+public class Toolbox extends JPanel implements MouseListener {
     
     private Map city;
-    
-    private JButton r, c, i, road, grass;
     
     private Zone type;
     
     private int dragX, dragY;
     
-    public GuiToolbox(Map city)
+    public Toolbox(Map city)
     {
         super();
         this.city = city;
         this.type = Zone.RESIDENTIAL;
         
-        r = new JButton("Residential");
-        c = new JButton("Commercial");
-        i = new JButton("Industrial");
-        road = new JButton("Road");
-        grass = new JButton("Grass");
+        this.setLayout(new GridLayout(Tile.Zone.values().length,0));
         
-        this.setLayout(new GridLayout(5,0));
-        this.add(r,0,0);
-        this.add(c,1,0);
-        this.add(i,2,0);   
-        this.add(road,3,0);
-        this.add(grass,4,0);
-        
-        r.addActionListener(this);
-        c.addActionListener(this);
-        i.addActionListener(this);
-        road.addActionListener(this);
-        grass.addActionListener(this);
-        
-        
+        int i = 0;
+        for (final Tile.Zone z : Tile.Zone.values()) {
+            JButton button = new JButton(z.toString());
+            button.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    type = z;
+                }
+            });
+            this.add(button,0,i);
+            i++;
+        }
     }
     
     @Override
@@ -100,21 +92,5 @@ public class GuiToolbox extends JPanel implements MouseListener, ActionListener 
     @Override
     public void mouseClicked(MouseEvent e)
     {
-    }
-    
-    @Override
-    public void actionPerformed(ActionEvent e)
-    {
-        if (e.getSource() == this.r) {
-            this.type = Zone.RESIDENTIAL;
-        } else if (e.getSource() == this.c) {
-            this.type = Zone.COMMERCIAL;
-        } else if (e.getSource() == this.i) {
-            this.type = Zone.INDUSTRIAL;
-        } else if (e.getSource() == this.road) {
-            this.type = Zone.ROAD;
-        } else if (e.getSource() == this.grass) {
-            this.type = Zone.GRASS;
-        }
     }
 }

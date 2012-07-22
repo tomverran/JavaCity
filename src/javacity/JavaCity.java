@@ -1,11 +1,12 @@
 package javacity;
 import javacity.world.Map;
-import javacity.game.component.Commercial;
-import javacity.game.component.Industrial;
-import javacity.game.component.Residential;
+import javacity.game.model.Commercial;
+import javacity.game.model.Industrial;
+import javacity.game.model.AbstractModel;
+import javacity.game.model.Electricity;
+import javacity.game.model.Residential;
 import javacity.game.observer.TileCost;
 import javacity.ui.Gui;
-import javacity.world.City;
 
 /**
  * The main game class?
@@ -19,7 +20,6 @@ public class JavaCity
     public static void main(String[] args) 
     {    
         Map map = new Map(20,15);
-        City city = new City(map);
         Simulation sim = new Simulation();
         
         //handle observer game components
@@ -28,11 +28,13 @@ public class JavaCity
         //construct our GUI, which handles itself
         //constructing animation threads etc.
         Gui gui = new Gui(map);
+        AbstractModel.setMap(map);
                 
         //handle per-cycle game components
-        sim.addComponent(new Residential(city));
-        sim.addComponent(new Commercial(city));
-        sim.addComponent(new Industrial(city));
+        sim.addComponent(new Residential());
+        sim.addComponent(new Commercial());
+        sim.addComponent(new Industrial());
+        sim.addComponent(new Electricity());
         sim.addComponent(gui);
 
         //run our simulation thread.

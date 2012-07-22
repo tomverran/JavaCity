@@ -8,37 +8,40 @@ import java.io.File;
 import java.util.EnumMap;
 import javacity.world.Map;
 import javacity.world.Tile;
-import javacity.world.data.Flag;
-import javacity.world.data.Zone;
 import javax.imageio.ImageIO;
 
 /**
  * A Java awt canvas responsible for drawing the city.
  * @author Tom
  */
-public class GuiCanvas extends Canvas implements Runnable {
+public class Viewport extends Canvas implements Runnable {
     
     private Map c;
-    private EnumMap<Zone, Image> images;
-    private EnumMap<Zone, Image> buildings;
+    private EnumMap<Tile.Zone, Image> images;
+    private EnumMap<Tile.Zone, Image> buildings;
+    private EnumMap<Tile.Flag, Image> flags;
     
-    public GuiCanvas(Map c)
+    public Viewport(Map c)
     {
         super();
         this.c = c;
         
         try {
-            images = new EnumMap<Zone,Image>(Zone.class);
-            buildings = new EnumMap<Zone,Image>(Zone.class);
+            images = new EnumMap<Tile.Zone,Image>(Tile.Zone.class);
+            buildings = new EnumMap<Tile.Zone,Image>(Tile.Zone.class);
+            flags = new EnumMap<Tile.Flag, Image>(Tile.Flag.class);
             
-            images.put(Zone.RESIDENTIAL, ImageIO.read(new File("zone_r.png")));
-            images.put(Zone.COMMERCIAL, ImageIO.read(new File("zone_c.png")));
-            images.put(Zone.INDUSTRIAL, ImageIO.read(new File("zone_i.png")));   
-            images.put(Zone.GRASS, ImageIO.read(new File("grass.png")));   
+            images.put(Tile.Zone.RESIDENTIAL, ImageIO.read(new File("zone_r.png")));
+            images.put(Tile.Zone.COMMERCIAL, ImageIO.read(new File("zone_c.png")));
+            images.put(Tile.Zone.INDUSTRIAL, ImageIO.read(new File("zone_i.png")));   
+            images.put(Tile.Zone.POWERPLANT, ImageIO.read(new File("power.png")));   
+            images.put(Tile.Zone.GRASS, ImageIO.read(new File("grass.png")));   
             
-            buildings.put(Zone.RESIDENTIAL, ImageIO.read(new File("occupied_r.png")));
-            buildings.put(Zone.COMMERCIAL, ImageIO.read(new File("occupied_c.png")));
-            buildings.put(Zone.INDUSTRIAL, ImageIO.read(new File("occupied_i.png")));   
+            buildings.put(Tile.Zone.RESIDENTIAL, ImageIO.read(new File("occupied_r.png")));
+            buildings.put(Tile.Zone.COMMERCIAL, ImageIO.read(new File("occupied_c.png")));
+            buildings.put(Tile.Zone.INDUSTRIAL, ImageIO.read(new File("occupied_i.png")));   
+            
+            flags.put(Tile.Flag.POWERED,ImageIO.read(new File("powered.png")));
       
         } catch (Exception e) {
             System.out.println("fail");
@@ -73,9 +76,17 @@ public class GuiCanvas extends Canvas implements Runnable {
                 }
                 
                 //special case: buildings
-                if (t.hasFlag(Flag.OCCUPIED)) {
+                if (t.hasFlag(Tile.Flag.OCCUPIED)) {
                     g2.drawImage(this.buildings.get(t.getType()), x,y, this);
                 }
+                
+                
+                for (Tile.Flag f : this.flags.keySet()) {
+                    if (t.hasFlag(f)) {
+                        g2.drawImage(this.flags.get(f),x,y,this);
+                    }
+                }
+                
             }
         }
         this.getBufferStrategy().show();
