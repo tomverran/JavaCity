@@ -9,7 +9,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import javacity.world.City;
+import javacity.world.Map;
+import javacity.world.Type;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
@@ -17,21 +18,21 @@ import javax.swing.JPanel;
  *
  * @author Tom
  */
-public class GuiToolbox extends JPanel implements MouseListener, ActionListener {
+public class Toolbox extends JPanel implements MouseListener {
     
-    private City city;
+    private Map city;
     
     private JButton r, c, i, road, grass;
     
-    private String type;
+    private Type type;
     
     private int dragX, dragY;
     
-    public GuiToolbox(City city)
+    public Toolbox(Map city)
     {
         super();
         this.city = city;
-        this.type = "zone_r";
+        this.type = Type.RESIDENTIAL;
         
         r = new JButton("Residential");
         c = new JButton("Commercial");
@@ -39,18 +40,19 @@ public class GuiToolbox extends JPanel implements MouseListener, ActionListener 
         road = new JButton("Road");
         grass = new JButton("Grass");
         
-        this.setLayout(new GridLayout(5,0));
-        this.add(r,0,0);
-        this.add(c,1,0);
-        this.add(i,2,0);   
-        this.add(road,3,0);
-        this.add(grass,4,0);
+        this.setLayout(new GridLayout(Type.values().length,0));
         
-        r.addActionListener(this);
-        c.addActionListener(this);
-        i.addActionListener(this);
-        road.addActionListener(this);
-        grass.addActionListener(this);
+        int i = 0;
+        for (final Type z : Type.values()) {
+            JButton button = new JButton(z.toString());
+            button.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    type = z;
+                }
+            });
+            this.add(button,0,i);
+            i++;
+        }
         
         
     }
@@ -99,21 +101,5 @@ public class GuiToolbox extends JPanel implements MouseListener, ActionListener 
     @Override
     public void mouseClicked(MouseEvent e)
     {
-    }
-    
-    @Override
-    public void actionPerformed(ActionEvent e)
-    {
-        if (e.getSource() == this.r) {
-            this.type ="zone_r";
-        } else if (e.getSource() == this.c) {
-            this.type = "zone_c";
-        } else if (e.getSource() == this.i) {
-            this.type = "zone_i";
-        } else if (e.getSource() == this.road) {
-            this.type = "road";
-        } else if (e.getSource() == this.grass) {
-            this.type = "grass";
-        }
     }
 }

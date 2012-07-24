@@ -1,8 +1,8 @@
 package javacity.ui;
 import java.awt.BorderLayout;
 import javacity.lib.Component;
+import javacity.world.Map;
 import javacity.world.City;
-import javacity.world.Metrics;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
@@ -12,24 +12,24 @@ import javax.swing.JLabel;
  */
 public class Gui extends JFrame implements Component {
     
-    private GuiCanvas canvas;
-    private GuiToolbox tools;
+    private Viewport canvas;
+    private Toolbox tools;
     private JLabel pop;
-    private City city;
+    private Map city;
     
     /**
      * Initialise our GUI, assembling a Canvas for drawing
      * and a Toolbox for event handling. Start the animation thread.
      * @param c 
      */
-    public Gui(City c)
+    public Gui(Map c)
     {
         super();
         
         this.city = c;
-        this.canvas = new GuiCanvas(c);
-        this.tools = new GuiToolbox(c);
-        this.pop = new JLabel("Population: 0");
+        this.canvas = new Viewport(c);
+        this.tools = new Toolbox(c);
+        this.pop = new JLabel("Population: is broken");
         
         //set our properties.
         this.setLayout(new BorderLayout());
@@ -62,6 +62,6 @@ public class Gui extends JFrame implements Component {
     @Override
     public void tick()
     {
-        this.pop.setText("Population: "+Metrics.population(city));
+        //this.pop.setText("Population: "+City.population(city));
     }
 }

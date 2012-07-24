@@ -7,6 +7,8 @@ package javacity.game.component;
 import java.util.Random;
 import javacity.lib.Component;
 import javacity.world.City;
+import javacity.world.Map;
+import javacity.world.Type;
 
 /**
  *
@@ -14,23 +16,26 @@ import javacity.world.City;
  */
 public abstract class TileGrowth implements Component 
 {
+    protected Map map; //todo remove
     protected City city;
-    private static Random r;
-    private String zone;
-    private String occupied;
     
+    private Type zone;
+    private Type occupied;
+    
+    private static Random r;
     static {
         r = new Random();
     }
     
     /**
      * Init
-     * @param City c
+     * @param Map c
      * @param String zone type of the empty tile
      * @param String occupied type of the tile when occupied 
      */
-    public TileGrowth(City c, String zone, String occupied)
+    public TileGrowth(Map m, City c, Type zone, Type occupied)
     {
+        this.map = m;
         this.city = c;
         this.zone = zone;
         this.occupied = occupied;
@@ -47,9 +52,9 @@ public abstract class TileGrowth implements Component
         growth += this.getGrowthModifier();
         
         if (growth > 0.4) {
-            this.city.switchTypeOfRandom(this.zone, this.occupied);
+            this.map.switchTypeOfRandom(this.zone, this.occupied);
         } else if (growth < -0.4) {
-            this.city.switchTypeOfRandom(this.occupied, this.zone);             
+            this.map.switchTypeOfRandom(this.occupied, this.zone);             
         }
         
     }

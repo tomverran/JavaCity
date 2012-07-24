@@ -1,6 +1,7 @@
 package javacity.game.component;
+import javacity.world.Map;
 import javacity.world.City;
-import javacity.world.Metrics;
+import javacity.world.Type;
 
 /**
  * Class to handle growth and decline of industrial tiles.
@@ -8,16 +9,16 @@ import javacity.world.Metrics;
  */
 public class Industrial extends TileGrowth
 {
-    public Industrial(City c)
+    public Industrial(City c, Map m)
     {
-        super(c, "zone_i", "occupied_i");
+        super(m, c, Type.INDUSTRIAL, Type.OCCUPIED_INDUSTRIAL);
     }
     
     @Override
     public float getGrowthModifier()
     {
-        int population = Metrics.population(this.city);
-        int industrial = this.city.getTilesByType("occupied_i").size();
+        int population = this.city.population();
+        int industrial = this.map.getTilesByType(Type.OCCUPIED_INDUSTRIAL).size();
         return industrial > population ? -0.2f : 0.2f;  
     }
     

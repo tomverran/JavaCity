@@ -9,37 +9,39 @@ import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.io.File;
+import java.util.EnumMap;
 import java.util.HashMap;
-import javacity.world.City;
+import javacity.world.Map;
 import javacity.world.Tile;
+import javacity.world.Type;
 import javax.imageio.ImageIO;
 
 /**
  *
  * @author Tom
  */
-public class GuiCanvas extends Canvas implements Runnable {
+public class Viewport extends Canvas implements Runnable {
     
-    private City c;
-    private HashMap<String, Image> images;
+    private Map c;
+    private EnumMap<Type, Image> images;
     
-    public GuiCanvas(City c)
+    public Viewport(Map c)
     {
         super();
         this.c = c;
         
         try {
-            images = new HashMap<String,Image>();
-            images.put("zone_r", ImageIO.read(new File("zone_r.png")));
-            images.put("zone_c", ImageIO.read(new File("zone_c.png")));
-            images.put("zone_i", ImageIO.read(new File("zone_i.png")));   
+            images = new EnumMap<Type,Image>(Type.class);
+            images.put(Type.RESIDENTIAL, ImageIO.read(new File("zone_r.png")));
+            images.put(Type.COMMERCIAL, ImageIO.read(new File("zone_c.png")));
+            images.put(Type.INDUSTRIAL, ImageIO.read(new File("zone_i.png")));   
             
-            images.put("grass",  ImageIO.read(new File("grass.png")));   
-            images.put("road",  ImageIO.read(new File("road.png")));   
+            images.put(Type.GRASS,  ImageIO.read(new File("grass.png")));   
+            images.put(Type.ROAD,  ImageIO.read(new File("road.png")));   
             
-            images.put("occupied_r", ImageIO.read(new File("occupied_r.png")));
-            images.put("occupied_c", ImageIO.read(new File("occupied_c.png")));
-            images.put("occupied_i", ImageIO.read(new File("occupied_i.png")));   
+            images.put(Type.OCCUPIED_RESIDENTIAL, ImageIO.read(new File("occupied_r.png")));
+            images.put(Type.OCCUPIED_COMMERCIAL, ImageIO.read(new File("occupied_c.png")));
+            images.put(Type.OCCUPIED_INDUSTRIAL, ImageIO.read(new File("occupied_i.png")));   
             
         } catch (Exception e) {
             System.out.println("fail");

@@ -3,8 +3,9 @@
  * and open the template in the editor.
  */
 package javacity.game.component;
+import javacity.world.Map;
 import javacity.world.City;
-import javacity.world.Metrics;
+import javacity.world.Type;
 
 /**
  * Class to handle growth and decline of commercial tiles.
@@ -12,17 +13,17 @@ import javacity.world.Metrics;
  */
 public class Commercial extends TileGrowth
 {
-    public Commercial(City c)
+    public Commercial(City c, Map m)
     {
-        super(c, "zone_c", "occupied_c");
+        super(m, c, Type.COMMERCIAL, Type.OCCUPIED_COMMERCIAL);
     }
     
     @Override
     public float getGrowthModifier()
     {
-        int population = Metrics.population(this.city);
-        int commercial = this.city.getTilesByType("occupied_c").size();
-        int industrial = this.city.getTilesByType("occupied_i").size();
+        int population = this.city.population();
+        int commercial = this.map.getTilesByType(Type.OCCUPIED_COMMERCIAL).size();
+        int industrial = this.map.getTilesByType(Type.OCCUPIED_INDUSTRIAL).size();
         
         //a commercial place requires two industrial buildings for supply
         boolean balanceOkay = (commercial + 1) * 2 < industrial;
