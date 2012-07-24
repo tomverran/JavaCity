@@ -33,6 +33,25 @@ public class Tile extends Observable
         this.building = building;
     }
     
+    public void removeBuilding()
+    {
+        this.building = null;
+    }
+    
+    /**
+     * Do we have a building?
+     * @return 
+     */
+    public boolean hasBuilding()
+    {
+        return this.building != null;
+    }
+    
+    public Building getBuilding()
+    {
+        return this.building;
+    }
+    
     /**
      * Get our type
      * @return 

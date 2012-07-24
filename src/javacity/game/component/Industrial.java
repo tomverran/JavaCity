@@ -1,5 +1,4 @@
 package javacity.game.component;
-import javacity.world.Map;
 import javacity.world.City;
 import javacity.world.Type;
 
@@ -9,16 +8,16 @@ import javacity.world.Type;
  */
 public class Industrial extends TileGrowth
 {
-    public Industrial(City c, Map m)
+    public Industrial(City c)
     {
-        super(m, c, Type.INDUSTRIAL, Type.OCCUPIED_INDUSTRIAL);
+        super(c, Type.INDUSTRIAL);
     }
     
     @Override
     public float getGrowthModifier()
     {
         int population = this.city.population();
-        int industrial = this.map.getTilesByType(Type.OCCUPIED_INDUSTRIAL).size();
+        int industrial = this.city.population(Type.INDUSTRIAL);
         return industrial > population ? -0.2f : 0.2f;  
     }
     

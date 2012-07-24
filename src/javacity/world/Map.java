@@ -2,10 +2,6 @@ package javacity.world;
 import javacity.lib.Point;
 import java.util.HashMap;
 import java.util.ArrayList;
-import java.util.EnumMap;
-import java.util.Observer;
-import java.util.Observable;
-import java.util.Random;
 
 /**
  * A city can be thought of as a map for the city to reside in.
@@ -15,29 +11,24 @@ import java.util.Random;
  * which provides methods for finding tiles to calculate things
  * @author Tom
  */
-public class Map implements Observer
+public class Map
 {
-    private Random r;
     private Tile[][] grid;
     private HashMap<Tile, Point> locations;
-    private EnumMap<Type, ArrayList<Tile>> types;
     
     /**
      * Construct our city.
      */
     public Map(int xsize, int ysize)
     {    
-        r = new Random();
         this.grid = new Tile[xsize][ysize];
         this.locations = new HashMap<Tile, Point>();
-        this.types = new EnumMap<Type, ArrayList<Tile>>(Type.class);
-        
+
         for (int x = 0; x < xsize; x++) {
             for (int y = 0; y < ysize; y++) {
                 Tile t = new Tile();
                 this.grid[x][y] = t;
                 this.locations.put(t, new Point(x, y));
-                t.addObserver(this);
                 t.setType(Type.GRASS);
             }
         }
@@ -48,27 +39,15 @@ public class Map implements Observer
      * @param string type the type of the tile
      * @return ArrayList<Tile>
      */
-    public ArrayList<Tile> getTilesByType(Type type)
+    public ArrayList<Tile> getTiles(Type type, boolean occupied)
     {
-        if (this.types.containsKey(type)) {
-            return (ArrayList<Tile>)this.types.get(type).clone();            
-        } else {
-            return new ArrayList<Tile>();
+        ArrayList<Tile> tiles = new ArrayList<Tile>();
+        for (Tile t : this.locations.keySet()) {
+            if (t.getType() == type && t.hasBuilding() == occupied) {
+                tiles.add(t);
+            }
         }
-    }
-    
-    /**
-     * Switch the type of a random tile of type from, to type of type to.
-     * Clear as mud, right. Used for occupying / deserting zones.
-     * @param string from
-     * @param string to 
-     */
-    public void switchTypeOfRandom(Type from, Type to)
-    {
-        ArrayList<Tile> tiles = this.getTilesByType(from);
-        if (tiles.size() > 0) {
-            tiles.get(r.nextInt(tiles.size())).setType(to);           
-        }
+        return tiles;
     }
     
     /**
@@ -155,51 +134,5 @@ public class Map implements Observer
     public ArrayList<Tile> getNeighbours(Tile t)
     {
         return this.getNeighbours(t, 1);
-    }
-    
-    /**
-     * Register an observer to all tiles,
-     * listening for changes of their state
-     * @param o 
-     */
-    public void registerTileObserver(Observer o)
-    {
-        for (Tile t : this.locations.keySet()) {
-            t.addObserver(o);
-        }
-    }
-    
-    /**
-     * Remove an observer from all tiles.
-     * @param o 
-     */
-    public void removeTileObserver(Observer o)
-    {
-        for (Tile t : this.locations.keySet()) {
-            t.deleteObserver(o);
-        }        
-    }
-    
-    /**
-     * Handle observing tile changes
-     * so the internal arrays can be rebuilt
-     * @param t 
-     */
-    @Override
-    public void update(Observable o, Object args)
-    {
-        if (o instanceof Tile) {
-            
-            Tile t = (Tile)o;
-            if (args != null) {
-                Type oldType = (Type)args;
-                this.types.get(oldType).remove(t);
-            }
-            Type type = t.getType();
-            if (!this.types.containsKey(type)) {
-                this.types.put(type, new ArrayList<Tile>());
-            }
-            this.types.get(type).add(t);            
-        }
     }
 }

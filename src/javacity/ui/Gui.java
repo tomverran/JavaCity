@@ -27,7 +27,7 @@ public class Gui extends JFrame implements Component {
         super();
         
         this.city = c;
-        this.canvas = new Viewport(c);
+        this.canvas = new Viewport(c, new ImageRepository());
         this.tools = new Toolbox(c);
         this.pop = new JLabel("Population: is broken");
         

@@ -1,9 +1,4 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package javacity.game.component;
-import javacity.world.Map;
 import javacity.world.City;
 import javacity.world.Type;
 
@@ -13,17 +8,17 @@ import javacity.world.Type;
  */
 public class Commercial extends TileGrowth
 {
-    public Commercial(City c, Map m)
+    public Commercial(City c)
     {
-        super(m, c, Type.COMMERCIAL, Type.OCCUPIED_COMMERCIAL);
+        super(c, Type.COMMERCIAL);
     }
     
     @Override
     public float getGrowthModifier()
     {
         int population = this.city.population();
-        int commercial = this.map.getTilesByType(Type.OCCUPIED_COMMERCIAL).size();
-        int industrial = this.map.getTilesByType(Type.OCCUPIED_INDUSTRIAL).size();
+        int commercial = this.city.population(Type.COMMERCIAL);
+        int industrial = this.city.population(Type.INDUSTRIAL);
         
         //a commercial place requires two industrial buildings for supply
         boolean balanceOkay = (commercial + 1) * 2 < industrial;

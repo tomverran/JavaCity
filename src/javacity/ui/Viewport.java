@@ -4,17 +4,10 @@
  */
 package javacity.ui;
 import java.awt.Canvas;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
-import java.awt.Image;
-import java.io.File;
-import java.util.EnumMap;
-import java.util.HashMap;
 import javacity.world.Map;
 import javacity.world.Tile;
-import javacity.world.Type;
-import javax.imageio.ImageIO;
 
 /**
  *
@@ -23,31 +16,13 @@ import javax.imageio.ImageIO;
 public class Viewport extends Canvas implements Runnable {
     
     private Map c;
-    private EnumMap<Type, Image> images;
+    private ImageRepository i;
     
-    public Viewport(Map c)
+    public Viewport(Map c, ImageRepository i)
     {
         super();
         this.c = c;
-        
-        try {
-            images = new EnumMap<Type,Image>(Type.class);
-            images.put(Type.RESIDENTIAL, ImageIO.read(new File("zone_r.png")));
-            images.put(Type.COMMERCIAL, ImageIO.read(new File("zone_c.png")));
-            images.put(Type.INDUSTRIAL, ImageIO.read(new File("zone_i.png")));   
-            
-            images.put(Type.GRASS,  ImageIO.read(new File("grass.png")));   
-            images.put(Type.ROAD,  ImageIO.read(new File("road.png")));   
-            
-            images.put(Type.OCCUPIED_RESIDENTIAL, ImageIO.read(new File("occupied_r.png")));
-            images.put(Type.OCCUPIED_COMMERCIAL, ImageIO.read(new File("occupied_c.png")));
-            images.put(Type.OCCUPIED_INDUSTRIAL, ImageIO.read(new File("occupied_i.png")));   
-            
-        } catch (Exception e) {
-            System.out.println("fail");
-        }
-        
-
+        this.i = i;
     }
     
     public void init()
@@ -66,12 +41,9 @@ public class Viewport extends Canvas implements Runnable {
         for (int x = 0; x < c.getXSize()*32; x+=32) {
             for (int y = 0; y < c.getYSize()*32; y+=32) {
                 Tile t = c.getByLocation(x/32, y/32);
-                
-                if (this.images.containsKey(t.getType())) {
-                    g2.drawImage(this.images.get(t.getType()),x,y,this);
-                } else {
-                    g2.setColor(Color.gray);
-                    g2.fillRect(x, y, 32, 32);
+                g2.drawImage(i.getImageFor(t),x,y,this);
+                if (t.hasBuilding()) {
+                    g2.drawImage(i.getImageFor(t.getBuilding()), x, y, this);
                 }
             }
         }

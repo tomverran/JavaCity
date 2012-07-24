@@ -1,13 +1,7 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package javacity.game.component;
-
 import java.util.Random;
 import javacity.lib.Component;
 import javacity.world.City;
-import javacity.world.Map;
 import javacity.world.Type;
 
 /**
@@ -16,16 +10,10 @@ import javacity.world.Type;
  */
 public abstract class TileGrowth implements Component 
 {
-    protected Map map; //todo remove
-    protected City city;
-    
     private Type zone;
-    private Type occupied;
-    
-    private static Random r;
-    static {
-        r = new Random();
-    }
+    protected City city;  
+    private static Random r = new Random();
+
     
     /**
      * Init
@@ -33,12 +21,10 @@ public abstract class TileGrowth implements Component
      * @param String zone type of the empty tile
      * @param String occupied type of the tile when occupied 
      */
-    public TileGrowth(Map m, City c, Type zone, Type occupied)
+    public TileGrowth(City c, Type zone)
     {
-        this.map = m;
         this.city = c;
         this.zone = zone;
-        this.occupied = occupied;
     }
     
     /**
@@ -51,12 +37,11 @@ public abstract class TileGrowth implements Component
         float growth = r.nextFloat() - 0.5f;
         growth += this.getGrowthModifier();
         
-        if (growth > 0.4) {
-            this.map.switchTypeOfRandom(this.zone, this.occupied);
-        } else if (growth < -0.4) {
-            this.map.switchTypeOfRandom(this.occupied, this.zone);             
+        if (growth > 0.3) {
+            this.city.build(zone);
+        } else if (growth < -0.3) {
+            this.city.demolish(zone);             
         }
-        
     }
     
     /**

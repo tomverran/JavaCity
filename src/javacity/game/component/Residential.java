@@ -1,5 +1,4 @@
 package javacity.game.component;
-import javacity.world.Map;
 import javacity.world.City;
 import javacity.world.Type;
 
@@ -11,9 +10,9 @@ import javacity.world.Type;
 public class Residential extends TileGrowth {
     
     
-    public Residential(City c, Map m)
+    public Residential(City c)
     {
-        super(m, c, Type.RESIDENTIAL, Type.OCCUPIED_RESIDENTIAL);
+        super(c, Type.RESIDENTIAL);
     }
     
     /**
@@ -29,6 +28,7 @@ public class Residential extends TileGrowth {
         
         //find number of jobs available
         int jobspaces = this.city.availableJobs();
+        System.out.println(population+", "+jobspaces);
         
         //find number of jobs taken, adjust growth accordingly
         int jobs = this.city.occupiedJobs(); 

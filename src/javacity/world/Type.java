@@ -7,6 +7,5 @@ package javacity.world;
  */
 public enum Type {
     RESIDENTIAL, COMMERCIAL, INDUSTRIAL,
-    OCCUPIED_RESIDENTIAL, OCCUPIED_COMMERCIAL, OCCUPIED_INDUSTRIAL, //todo remove
     GRASS, ROAD
 }

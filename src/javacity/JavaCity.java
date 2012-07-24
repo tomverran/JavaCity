@@ -1,12 +1,10 @@
 package javacity;
-import javacity.lib.Component;
 import javacity.world.Map;
-import java.util.ArrayList;
 import javacity.game.component.Commercial;
 import javacity.game.component.Industrial;
 import javacity.game.component.Residential;
-import javacity.game.observer.TileCost;
 import javacity.ui.Gui;
+import javacity.world.BuildingRepository;
 import javacity.world.City;
 
 /**
@@ -22,19 +20,18 @@ public class JavaCity
     {    
         Map map = new Map(20,15);
         Simulation sim = new Simulation();
-        City city = new City(map);
-        
-        //handle observer game components
-        map.registerTileObserver(new TileCost());
+        BuildingRepository repo = new BuildingRepository();
+        City city = new City(map, repo);
+
 
         //construct our GUI, which handles itself
         //constructing animation threads etc.
         Gui gui = new Gui(map);
                 
         //handle per-cycle game components
-        sim.addComponent(new Residential(city, map));
-        sim.addComponent(new Commercial(city, map));
-        sim.addComponent(new Industrial(city, map));
+        sim.addComponent(new Residential(city));
+        sim.addComponent(new Commercial(city));
+        sim.addComponent(new Industrial(city));
         sim.addComponent(gui);
 
         //run our simulation thread.
