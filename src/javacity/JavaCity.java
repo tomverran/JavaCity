@@ -3,6 +3,7 @@ import javacity.world.Map;
 import javacity.game.component.Commercial;
 import javacity.game.component.Industrial;
 import javacity.game.component.Residential;
+import javacity.game.component.Power;
 import javacity.ui.Gui;
 import javacity.world.BuildingRepository;
 import javacity.world.City;
@@ -32,6 +33,7 @@ public class JavaCity
         sim.addComponent(new Residential(city));
         sim.addComponent(new Commercial(city));
         sim.addComponent(new Industrial(city));
+        sim.addComponent(new Power(city));
         sim.addComponent(gui);
 
         //run our simulation thread.

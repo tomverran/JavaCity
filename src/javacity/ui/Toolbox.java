@@ -22,7 +22,7 @@ public class Toolbox extends JPanel implements MouseListener {
     
     private Map city;
     
-    private JButton r, c, i, road, grass;
+    private JButton r, c, i, road, grass, power;
     
     private Type type;
     
@@ -39,6 +39,7 @@ public class Toolbox extends JPanel implements MouseListener {
         i = new JButton("Industrial");
         road = new JButton("Road");
         grass = new JButton("Grass");
+        power = new JButton("Power");
         
         this.setLayout(new GridLayout(Type.values().length,0));
         

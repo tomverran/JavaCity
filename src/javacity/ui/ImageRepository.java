@@ -26,7 +26,7 @@ public class ImageRepository {
     {
         buildings = new HashMap<Integer, Image>();
         try {
-            for (int id = 1; id <= 15; id++) {
+            for (int id = 1; id <= 16; id++) {
                 buildings.put(id, ImageIO.read(new File("images/buildings/building_"+id+".png")));
             }            
         } catch (Exception e) {
@@ -51,7 +51,6 @@ public class ImageRepository {
     
     public Image getImageFor(Tile t)
     {
-
         return this.tiles.get(t.getType());
     }
     

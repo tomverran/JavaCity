@@ -7,5 +7,5 @@ package javacity.world;
  */
 public enum Type {
     RESIDENTIAL, COMMERCIAL, INDUSTRIAL,
-    GRASS, ROAD
+    GRASS, ROAD, POWER
 }

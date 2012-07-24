@@ -13,6 +13,7 @@ public class BuildingRepository
     private Building[] residential;
     private Building[] commercial;
     private Building[] industrial;
+    private Building[] power;
     private static Random r;
     static {
         r = new Random();
@@ -23,6 +24,7 @@ public class BuildingRepository
         residential = new Building[5];
         commercial = new Building[5];
         industrial = new Building[5];
+        power = new Building[1];
         
         String[] rNames = new String[]{"Zeke's House",
                                        "Java Hut","Small Bungalow",
@@ -38,6 +40,8 @@ public class BuildingRepository
                                        "Trouble at t'Mill","Renholm Industries",
                                        "Pop Culture Reference Ltd",
                                        "Evil Co"};
+        
+        String[] pNames = new String[]{"Coal Plant"};
         
         int id = 0;
         for (int i = 0; i < iNames.length; i++) {
@@ -65,7 +69,16 @@ public class BuildingRepository
             residential[i] = b;
             id += 1;
             b.setId(id);
-        }                
+        }   
+        
+        for (int i = 0; i < pNames.length; i++) {
+            Building b = new Building();
+            b.setType(Type.POWER);
+            b.setName(pNames[i]);
+            power[i] = b;
+            id += 1;
+            b.setId(id);           
+        }
     }
     
     /**
@@ -81,6 +94,8 @@ public class BuildingRepository
             return commercial[r.nextInt(commercial.length)];
         } else if (type == Type.RESIDENTIAL) {
             return residential[r.nextInt(residential.length)];
+        } else if (type == Type.POWER) {
+            return power[r.nextInt(power.length)];
         } else {
             throw new IllegalArgumentException("Unsupported Type");
         }
