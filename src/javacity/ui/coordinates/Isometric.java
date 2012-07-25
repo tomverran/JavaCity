@@ -36,15 +36,12 @@ public class Isometric extends CoordinateSystem
         xPos = (xPos - yPos) / 2;
         yPos = yPos + xPos;
        
-        int tmp = (screen.getX()-this.xShift) % 32;
-        int tmp2 = (screen.getY()-this.yShift) % 16;
-        System.out.println("x: "+tmp+", y: "+tmp2);
-        if(tmp >= 16) {
-            if(tmp2 < 8) {
+        if(((screen.getX()-this.xShift) % 32) >= 16) {
+            if(((screen.getY()-this.yShift) % 16) < 8) {
                 xPos++;
             }
         } else {
-            if(tmp2 < 8) {
+            if(((screen.getY()-this.yShift) % 16) < 8) {
                 xPos++;
             }
         }
