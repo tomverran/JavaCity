@@ -1,9 +1,4 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package javacity.game.component;
-
 import javacity.world.City;
 import javacity.world.Type;
 
@@ -11,7 +6,9 @@ import javacity.world.Type;
  *
  * @author Ali
  */
-public class Power extends TileGrowth {
+public class Power extends TileGrowth 
+{
+    
     public Power(City c)
     {
         super(c, Type.POWER);

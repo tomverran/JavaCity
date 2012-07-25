@@ -1,51 +1,43 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package javacity.ui;
-
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import javacity.lib.Point;
+import javacity.ui.strategy.coordinates.CoordinateSystem;
 import javacity.world.Map;
 import javacity.world.Type;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
 /**
- *
+ * A class to handle GUI events and draw buttons
  * @author Tom
  */
-public class Toolbox extends JPanel implements MouseListener {
-    
+public class Toolbox extends JPanel implements MouseListener 
+{
     private Map city;
-    
-    private JButton r, c, i, road, grass, power;
-    
     private Type type;
-    
     private int dragX, dragY;
+    private CoordinateSystem coords;
     
-    public Toolbox(Map city)
+    /**
+     * Construct our Toolbox
+     * @param city
+     * @param coords 
+     */
+    public Toolbox(Map city, CoordinateSystem coords)
     {
         super();
         this.city = city;
-        this.type = Type.RESIDENTIAL;
-        
-        r = new JButton("Residential");
-        c = new JButton("Commercial");
-        i = new JButton("Industrial");
-        road = new JButton("Road");
-        grass = new JButton("Grass");
-        power = new JButton("Power");
-        
+        this.coords = coords;
+        this.type = Type.RESIDENTIAL;        
         this.setLayout(new GridLayout(Type.values().length,0));
         
         int i = 0;
         for (final Type z : Type.values()) {
-            JButton button = new JButton(z.toString());
+            JButton button = new JButton(z.toString().toLowerCase());
             button.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     type = z;
@@ -54,8 +46,6 @@ public class Toolbox extends JPanel implements MouseListener {
             this.add(button,0,i);
             i++;
         }
-        
-        
     }
     
     @Override
@@ -70,17 +60,22 @@ public class Toolbox extends JPanel implements MouseListener {
         
     }
     
+    /**
+     * Handle the mouse being released - populate all tiles
+     * between the mouse start & end with the requested type
+     * @param e 
+     */
     @Override
     public void mouseReleased(MouseEvent e)
     {
-        int curX = e.getX() / 32;
-        int curY = e.getY() / 32;
+        Point startPos = coords.screenToTile(new Point(dragX, dragY));
+        Point endPos = coords.screenToTile(new Point(e.getX(), e.getY()));
         
-        int startx = Math.min(curX, this.dragX);
-        int endx = Math.max(curX, this.dragX);
-        
-        int starty = Math.min(curY, this.dragY);
-        int endy = Math.max(curY, this.dragY);
+        int startx = Math.min(startPos.getX(), endPos.getX());
+        int endx = Math.max(startPos.getX(), endPos.getX());
+
+        int starty = Math.min(startPos.getY(), endPos.getY());
+        int endy = Math.max(startPos.getY(), endPos.getY());
         
         for (int x = startx; x <= endx; x++) {
             for (int y = starty; y <= endy; y++) {
@@ -92,11 +87,15 @@ public class Toolbox extends JPanel implements MouseListener {
         
     }
     
+    /**
+     * Handle the mouse being pressed - save our drag start point
+     * @param e 
+     */
     @Override
     public void mousePressed(MouseEvent e)
     {
-        this.dragX = e.getX() / 32;
-        this.dragY = e.getY() / 32;
+        this.dragX = e.getX();
+        this.dragY = e.getY();
     }
     
     @Override

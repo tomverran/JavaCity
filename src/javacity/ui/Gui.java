@@ -1,8 +1,10 @@
 package javacity.ui;
 import java.awt.BorderLayout;
 import javacity.lib.Component;
+import javacity.ui.strategy.coordinates.CoordinateSystem;
+import javacity.ui.strategy.coordinates.Isometric;
+import javacity.ui.strategy.coordinates.TopDown;
 import javacity.world.Map;
-import javacity.world.City;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
@@ -11,6 +13,10 @@ import javax.swing.JLabel;
  * @author Tom
  */
 public class Gui extends JFrame implements Component {
+    
+    public enum Mode {
+        ISOMETRIC, TOPDOWN
+    }
     
     private Viewport canvas;
     private Toolbox tools;
@@ -22,13 +28,25 @@ public class Gui extends JFrame implements Component {
      * and a Toolbox for event handling. Start the animation thread.
      * @param c 
      */
-    public Gui(Map c)
+    public Gui(Map c, Mode m)
     {
         super();
-        
         this.city = c;
-        this.canvas = new Viewport(c, new ImageRepository());
-        this.tools = new Toolbox(c);
+        
+        String tileset;
+        CoordinateSystem coords;
+        
+        if (m == Mode.ISOMETRIC) {
+            coords = new Isometric(c.getXSize(),c.getYSize());
+            tileset = "isometric";
+        } else {
+            coords = new TopDown();
+            tileset = "topdown";
+        }
+        
+        this.canvas = new Viewport(c, new ImageRepository(tileset), coords);
+        this.tools = new Toolbox(c, coords);
+        
         this.pop = new JLabel("Population: is broken");
         
         //set our properties.

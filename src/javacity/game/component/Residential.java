@@ -28,7 +28,6 @@ public class Residential extends TileGrowth {
         
         //find number of jobs available
         int jobspaces = this.city.availableJobs();
-        System.out.println(population+", "+jobspaces);
         
         //find number of jobs taken, adjust growth accordingly
         int jobs = this.city.occupiedJobs(); 
