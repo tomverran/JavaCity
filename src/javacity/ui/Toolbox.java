@@ -5,7 +5,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import javacity.lib.Point;
-import javacity.ui.strategy.coordinates.CoordinateSystem;
+import javacity.ui.coordinates.CoordinateSystem;
 import javacity.world.Map;
 import javacity.world.Type;
 import javax.swing.JButton;

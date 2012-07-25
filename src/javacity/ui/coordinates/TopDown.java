@@ -1,4 +1,4 @@
-package javacity.ui.strategy.coordinates;
+package javacity.ui.coordinates;
 import javacity.lib.Point;
 
 /**

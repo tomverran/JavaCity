@@ -7,7 +7,7 @@ import java.awt.Image;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import javacity.lib.Point;
-import javacity.ui.strategy.coordinates.CoordinateSystem;
+import javacity.ui.coordinates.CoordinateSystem;
 import javacity.world.Map;
 import javacity.world.Tile;
 

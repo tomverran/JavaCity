@@ -1,9 +1,9 @@
 package javacity.ui;
 import java.awt.BorderLayout;
 import javacity.lib.Component;
-import javacity.ui.strategy.coordinates.CoordinateSystem;
-import javacity.ui.strategy.coordinates.Isometric;
-import javacity.ui.strategy.coordinates.TopDown;
+import javacity.ui.coordinates.CoordinateSystem;
+import javacity.ui.coordinates.Isometric;
+import javacity.ui.coordinates.TopDown;
 import javacity.world.Map;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
