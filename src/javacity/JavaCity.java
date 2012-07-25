@@ -27,7 +27,7 @@ public class JavaCity
 
         //construct our GUI, which handles itself
         //constructing animation threads etc.
-        Gui gui = new Gui(map, Gui.Mode.TOPDOWN);
+        Gui gui = new Gui(map, Gui.Mode.ISOMETRIC);
                 
         //handle per-cycle game components
         sim.addComponent(new Residential(city));

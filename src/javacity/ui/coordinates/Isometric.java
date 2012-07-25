@@ -31,7 +31,14 @@ public class Isometric extends CoordinateSystem
         //undo the effects of any map shifts
         int xPos = screen.getX() - this.xShift;
         int yPos = screen.getY() - this.yShift;
-
+        
+        xPos = xPos / 32; // now have x+y
+        yPos = yPos / 16; // now have y+(mapSizeX-x)
+        yPos = yPos - mapSizeX; // y - x
+        int tmp = xPos - yPos; // (x+y) - (y-x) = 2x
+        xPos = tmp / 2;
+        yPos = yPos + xPos;
+       
         //todo fix D:
         return new Point(xPos, yPos);
     }
