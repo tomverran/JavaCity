@@ -2,7 +2,6 @@ package javacity.world;
 import javacity.lib.Point;
 import java.util.HashMap;
 import java.util.ArrayList;
-import java.util.Collections;
 
 /**
  * A city can be thought of as a map for the city to reside in.
@@ -135,62 +134,5 @@ public class Map
     public ArrayList<Tile> getNeighbours(Tile t)
     {
         return this.getNeighbours(t, 1);
-    }
-    
-    
-    /**
-     * A class to handle A Star pathfinding between two tiles.
-     */
-    private class Pathfinder
-    {
-
-        private Tile start;
-        private Tile destination;
-        private ArrayList<Node> openList;
-        private ArrayList<Node> closedList;
-        
-        public Pathfinder(Tile start, Tile destination)
-        {
-            this.start = start;
-            Node startNode = new Node(start);
-            this.destination = destination;
-            this.openList = new ArrayList<Node>();
-            this.closedList = new ArrayList<Node>();
-            
-            for (Tile t : Map.this.getNeighbours(start)) {
-                
-                int cost = (int)getLocationOfTile(t)
-                                .distanceTo(getLocationOfTile(destination));
-                
-                Node n = new Node(t, startNode, cost);
-                this.openList.add(n);
-            }
-            
-            this.closedList.add(startNode); 
-            Collections.sort(openList);
-        }
-        
-        private void doThatThing()
-        {
-            //get the node with the lowest cost
-            Node currentNode = openList.remove(0);
-            
-            //find neighbours and add to the open list, or
-            //reassign the parent of nodes already in the open list
-            for (Tile t : Map.this.getNeighbours(currentNode.tile())) {
-                
-                int cost = (int)getLocationOfTile(t)
-                                .distanceTo(getLocationOfTile(destination));
-                
-                Node n = new Node(t, currentNode, cost);
-                if (this.openList.contains(n) ) {
-                    this.openList.remove(n);
-                }
-                this.openList.add(n);
-            }            
-            openList.indexOf(this);
-        }
-        
-    }
-    
+    }    
 }

@@ -1,10 +1,10 @@
 package javacity.world;
-import java.util.Observable;
+
 /**
  * A tile in our city. Knows its type. Soon to store other data.
  * @author Tom
  */
-public class Tile extends Observable 
+public class Tile
 {
     private Type type;
     private Building building;
@@ -15,10 +15,10 @@ public class Tile extends Observable
      */
     public void setType(Type type)
     {
-        Type oldType = this.type;
+        if (type != this.type && this.hasBuilding()) {
+            this.removeBuilding();
+        }
         this.type = type;
-        this.setChanged();
-        this.notifyObservers(oldType);
     }
     
     /**
