@@ -1,6 +1,7 @@
 package javacity.world;
-
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.Random;
 
 /**
@@ -14,11 +15,29 @@ public class City {
     private Map map;
     private BuildingRepository buildings;
     private static final Random r = new Random();
+    private GregorianCalendar date;
     
+    /**
+     * Construct this city.
+     * @param map
+     * @param b 
+     */
     public City(Map map, BuildingRepository b)
     {
         this.map = map;
         this.buildings = b;
+        this.date = new GregorianCalendar();
+        this.date.set(1900, 1, 1);
+    }
+    
+    public GregorianCalendar getDate()
+    {
+        return date;
+    }
+    
+    public void setDate(GregorianCalendar c)
+    {
+        this.date = c;
     }
     
     /**

@@ -1,9 +1,11 @@
 package javacity.ui;
 import java.awt.BorderLayout;
+import java.text.DateFormat;
 import javacity.lib.Component;
 import javacity.ui.coordinates.CoordinateSystem;
 import javacity.ui.coordinates.Isometric;
 import javacity.ui.coordinates.TopDown;
+import javacity.world.City;
 import javacity.world.Map;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -12,7 +14,7 @@ import javax.swing.JLabel;
  * A prettier GUI
  * @author Tom
  */
-public class Gui extends JFrame implements Component {
+public class SwingGui extends JFrame implements Component {
     
     public enum Mode {
         ISOMETRIC, TOPDOWN
@@ -21,31 +23,31 @@ public class Gui extends JFrame implements Component {
     private Viewport canvas;
     private Toolbox tools;
     private JLabel pop;
-    private Map city;
+    private City city;
     
     /**
      * Initialise our GUI, assembling a Canvas for drawing
      * and a Toolbox for event handling. Start the animation thread.
      * @param c 
      */
-    public Gui(Map c, Mode m)
+    public SwingGui(City city, Map map, Mode mode)
     {
         super();
-        this.city = c;
+        this.city = city;
         
         String tileset;
         CoordinateSystem coords;
         
-        if (m == Mode.ISOMETRIC) {
-            coords = new Isometric(c.getXSize(),c.getYSize());
+        if (mode == Mode.ISOMETRIC) {
+            coords = new Isometric(map.getXSize(),map.getYSize());
             tileset = "isometric";
         } else {
             coords = new TopDown();
             tileset = "topdown";
         }
         
-        this.canvas = new Viewport(c, new ImageRepository(tileset), coords);
-        this.tools = new Toolbox(c, coords);
+        this.canvas = new Viewport(map, new ImageRepository(tileset), coords);
+        this.tools = new Toolbox(map, coords);
         
         this.pop = new JLabel("Population: is broken");
         
@@ -80,6 +82,7 @@ public class Gui extends JFrame implements Component {
     @Override
     public void tick()
     {
-        //this.pop.setText("Population: "+City.population(city));
+        String d = DateFormat.getDateInstance().format(city.getDate().getTime());
+        this.pop.setText("Population: "+city.population() + "  Date: "+d);
     }
 }

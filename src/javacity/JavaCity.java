@@ -4,7 +4,8 @@ import javacity.game.component.Commercial;
 import javacity.game.component.Industrial;
 import javacity.game.component.Residential;
 import javacity.game.component.Power;
-import javacity.ui.Gui;
+import javacity.game.component.Time;
+import javacity.ui.SwingGui;
 import javacity.world.BuildingRepository;
 import javacity.world.City;
 
@@ -27,13 +28,14 @@ public class JavaCity
 
         //construct our GUI, which handles itself
         //constructing animation threads etc.
-        Gui gui = new Gui(map, Gui.Mode.ISOMETRIC);
+        SwingGui gui = new SwingGui(city, map, SwingGui.Mode.ISOMETRIC);
                 
         //handle per-cycle game components
         sim.addComponent(new Residential(city));
         sim.addComponent(new Commercial(city));
         sim.addComponent(new Industrial(city));
         sim.addComponent(new Power(city));
+        sim.addComponent(new Time(city));
         sim.addComponent(gui);
 
         //run our simulation thread.
