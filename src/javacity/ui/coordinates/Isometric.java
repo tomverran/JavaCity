@@ -35,7 +35,8 @@ public class Isometric extends CoordinateSystem
         yPos = yPos - mapSizeX; // y - x
         xPos = (xPos - yPos) / 2;
         yPos = yPos + xPos;
-       
+        System.out.println("X: "+xPos+" Y: "+yPos);
+        
         if(((screen.getX()-this.xShift) % 32) >= 16) {
             if(((screen.getY()-this.yShift) % 16) < 8) {
                 xPos++;
@@ -45,7 +46,7 @@ public class Isometric extends CoordinateSystem
                 xPos++;
             }
         }
-
+        System.out.println("--> X: "+xPos+" Y: "+yPos);
         //todo fix D:
         return new Point(xPos, yPos);
     }
