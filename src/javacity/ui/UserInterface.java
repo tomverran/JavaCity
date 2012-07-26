@@ -12,6 +12,6 @@ public interface UserInterface {
         NOTIFICATION, MESSAGE, DISASTER
     }
     
-    public void displayMessage(String message, MessageType type)
+    public void displayMessage(String message, MessageType type);
     
 }
