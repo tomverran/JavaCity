@@ -38,9 +38,9 @@ public abstract class TileGrowth implements Component
         growth += this.getGrowthModifier();
         
         if (growth > 0.3) {
-            this.city.build(zone);
+            this.city.occupy(zone);
         } else if (growth < -0.3) {
-            this.city.demolish(zone);             
+            this.city.abandon(zone);             
         }
     }
     

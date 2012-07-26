@@ -43,8 +43,12 @@ public class Map
     {
         ArrayList<Tile> tiles = new ArrayList<Tile>();
         for (Tile t : this.locations.keySet()) {
-            if (t.getType() == type && t.hasBuilding() == occupied) {
-                tiles.add(t);
+            if (t.getType() == type) {
+                
+                boolean occ = t.hasBuilding() && t.getBuilding().isOccupied();
+                if (occ == occupied) {
+                    tiles.add(t);                    
+                }
             }
         }
         return tiles;

@@ -93,12 +93,19 @@ public class City {
      * Build a new building of the given type.
      * @param t 
      */
-    public void build(Type t)
+    public void occupy(Type t)
     {
-        ArrayList<Tile> tile = map.getTiles(t, false);
-        if (tile.size() > 0) {
-            Building building = buildings.getRandomBuilding(t);
-            tile.get(r.nextInt(tile.size())).setBuilding(building);           
+        ArrayList<Tile> tiles = map.getTiles(t, false);
+        if (tiles.size() > 0) {
+            
+            Tile tile = tiles.get(r.nextInt(tiles.size()));
+            
+            if (tile.hasBuilding()) {
+                tile.getBuilding().setOccupied(true);
+            } else {
+                Building building = buildings.getRandomBuilding(t);
+                tile.setBuilding(building);                 
+            }          
         }
     }
     
@@ -106,11 +113,11 @@ public class City {
      * Demolish a building of the given type.
      * @param t 
      */
-    public void demolish(Type t)
+    public void abandon(Type t)
     {
         ArrayList<Tile> tile = map.getTiles(t, true);
         if (tile.size() > 0) {
-            tile.get(r.nextInt(tile.size())).removeBuilding();            
+            tile.get(r.nextInt(tile.size())).getBuilding().setOccupied(false);            
         }
     }
 }

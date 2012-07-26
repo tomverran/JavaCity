@@ -9,9 +9,8 @@ package javacity.ui;
 public interface UserInterface {
     
     public enum MessageType {
-        NOTIFICATION, MESSAGE, DISASTER
+        GOOD, BAD
     }
     
-    public void displayMessage(String message, MessageType type)
-    
+    public void displayMessage(String message, MessageType type);
 }

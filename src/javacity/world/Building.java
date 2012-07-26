@@ -11,6 +11,7 @@ public class Building {
     private String name;
     private int wealth;
     private Type type;
+    private boolean occupied;
 
     /**
      * @return the id
@@ -68,7 +69,15 @@ public class Building {
         this.type = type;
     }
 
+    public boolean isOccupied()
+    {
+        return this.occupied;
+    }
     
+    public void setOccupied(boolean occupied)
+    {
+        this.occupied = occupied;
+    }
     
     
 }

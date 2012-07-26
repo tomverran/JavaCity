@@ -9,28 +9,29 @@ import javacity.world.City;
 import javacity.world.Map;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 /**
  * A prettier GUI
  * @author Tom
  */
-public class SwingGui extends JFrame implements Component {
-    
+public class SwingInterface extends JFrame implements Component, UserInterface 
+{    
     public enum Mode {
         ISOMETRIC, TOPDOWN
     }
     
-    private Viewport canvas;
-    private Toolbox tools;
+    private SwingViewport canvas;
+    private SwingToolbox tools;
     private JLabel pop;
     private City city;
     
     /**
      * Initialise our GUI, assembling a Canvas for drawing
-     * and a Toolbox for event handling. Start the animation thread.
+     * and a SwingToolbox for event handling. Start the animation thread.
      * @param c 
      */
-    public SwingGui(City city, Map map, Mode mode)
+    public SwingInterface(City city, Map map, Mode mode)
     {
         super();
         this.city = city;
@@ -46,8 +47,8 @@ public class SwingGui extends JFrame implements Component {
             tileset = "topdown";
         }
         
-        this.canvas = new Viewport(map, new ImageRepository(tileset), coords);
-        this.tools = new Toolbox(map, coords);
+        this.canvas = new SwingViewport(map, new ImageRepository(tileset), coords);
+        this.tools = new SwingToolbox(map, coords);
         
         this.pop = new JLabel("Population: is broken");
         
@@ -84,5 +85,16 @@ public class SwingGui extends JFrame implements Component {
     {
         String d = DateFormat.getDateInstance().format(city.getDate().getTime());
         this.pop.setText("Population: "+city.population() + "  Date: "+d);
+    }
+    
+    /**
+     * Display a message
+     * @param message
+     * @param type 
+     */
+    @Override
+    public void displayMessage(String message, MessageType type) 
+    {
+        JOptionPane.showMessageDialog(this, message);
     }
 }

@@ -15,7 +15,7 @@ import javacity.world.Tile;
  * A ViewPort which, in this case, is isometric.
  * @author Tom
  */
-public class Viewport extends Canvas implements Runnable, KeyListener {
+public class SwingViewport extends Canvas implements Runnable, KeyListener {
     
     private Map c;
     private ImageRepository i;
@@ -26,7 +26,7 @@ public class Viewport extends Canvas implements Runnable, KeyListener {
      * @param c
      * @param i 
      */
-    public Viewport(Map c, ImageRepository i, CoordinateSystem coords)
+    public SwingViewport(Map c, ImageRepository i, CoordinateSystem coords)
     {
         super();
         this.coords = coords;

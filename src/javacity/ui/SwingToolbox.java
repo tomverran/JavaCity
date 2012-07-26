@@ -15,7 +15,7 @@ import javax.swing.JPanel;
  * A class to handle GUI events and draw buttons
  * @author Tom
  */
-public class Toolbox extends JPanel implements MouseListener 
+public class SwingToolbox extends JPanel implements MouseListener 
 {
     private Map city;
     private Type type;
@@ -23,11 +23,11 @@ public class Toolbox extends JPanel implements MouseListener
     private CoordinateSystem coords;
     
     /**
-     * Construct our Toolbox
+     * Construct our SwingToolbox
      * @param city
      * @param coords 
      */
-    public Toolbox(Map city, CoordinateSystem coords)
+    public SwingToolbox(Map city, CoordinateSystem coords)
     {
         super();
         this.city = city;

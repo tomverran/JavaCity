@@ -1,5 +1,4 @@
 package javacity.world;
-
 import java.util.Random;
 
 /**
@@ -100,4 +99,7 @@ public class BuildingRepository
             throw new IllegalArgumentException("Unsupported Type");
         }
     }
+    
+
+    
 }
