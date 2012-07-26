@@ -29,16 +29,23 @@ public class Isometric extends CoordinateSystem
     public Point screenToTile(Point screen) 
     {        
         //undo the effects of any map shifts
-        int xPos = screen.getX() - this.xShift;
-        int yPos = screen.getY() - this.yShift;
-        
-        xPos = xPos / 32; // now have x+y
-        yPos = yPos / 16; // now have y+(mapSizeX-x)
+        int xPos = (screen.getX() - this.xShift - 16) / 32;
+        int yPos = (screen.getY() - this.yShift) / 16;
+
         yPos = yPos - mapSizeX; // y - x
-        int tmp = xPos - yPos; // (x+y) - (y-x) = 2x
-        xPos = tmp / 2;
+        xPos = (xPos - yPos) / 2;
         yPos = yPos + xPos;
        
+        if(((screen.getX()-this.xShift) % 32) >= 16) {
+            if(((screen.getY()-this.yShift) % 16) < 8) {
+                xPos++;
+            }
+        } else {
+            if(((screen.getY()-this.yShift) % 16) < 8) {
+                xPos++;
+            }
+        }
+
         //todo fix D:
         return new Point(xPos, yPos);
     }
