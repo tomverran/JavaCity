@@ -94,12 +94,6 @@ public class SwingViewport extends Canvas implements Runnable, KeyListener {
                 int xPos = position.getX();
                 int yPos = position.getY();
                 
-                if(this.coords.get() != null) {
-                    Point xy = this.coords.tileToScreen(this.coords.get());
-                    g2.drawLine(xy.getX(), xy.getY(), xy.getX()+1, xy.getY()+1);
-                }
-                
-                
                 //now actually draw it.
                 Tile t = c.getByLocation(x, y);
                 g2.drawImage(i.getImageFor(t), xPos, yPos,this);

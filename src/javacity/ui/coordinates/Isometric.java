@@ -10,8 +10,6 @@ public class Isometric extends CoordinateSystem
     private int mapSizeX;
     private int mapSizeY;
     
-    public Point xy;
-    
     /**
      * Construct this isometric coordinate system.
      * Because I suck at maths I want the map size.
@@ -31,26 +29,22 @@ public class Isometric extends CoordinateSystem
     public Point screenToTile(Point screen) 
     {        
         //undo the effects of any map shifts
-        float xPos = (screen.getX() - this.xShift) / 32;
-        float yPos = (screen.getY() - this.yShift) / 16;
-
-        yPos = yPos - mapSizeX; // y - x
+        float xPos = (screen.getX() - this.xShift) / 32.0f;
+        float yPos = (screen.getY() - this.yShift) / 16.0f;
+        yPos += 0.1f;
+             
+        yPos = yPos - mapSizeX + 1; // y - x
         xPos = (xPos - yPos) / 2;
         yPos = yPos + xPos;
-        
-        if(((screen.getY()-this.yShift) % 16) < 8) {
-                xPos++;
-        }
-        this.xy = new Point((int) xPos, (int) yPos);
+
+        int x1 = (int) Math.ceil(xPos);
+        int y1 = (int) Math.ceil(yPos);
+        y1 -= 2;
 
         //todo fix D:
-        return new Point((int)xPos, (int)yPos);
+        return new Point(x1, y1);
     }
     
-    public Point get() {
-        return xy;
-    }
-
     /**
      * Convert a tile coordinate to a screen coordinate
      * @param tile
