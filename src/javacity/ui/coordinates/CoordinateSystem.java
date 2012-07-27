@@ -42,7 +42,7 @@ public abstract class CoordinateSystem {
      * @return 
      */
     public abstract Order getXOrder();
-    
+    public Point get() { return new Point(1,1); };
     public void setXShift(int xShift)
     {
         this.xShift = xShift;

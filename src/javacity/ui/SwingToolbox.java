@@ -8,6 +8,7 @@ import javacity.lib.Point;
 import javacity.ui.coordinates.CoordinateSystem;
 import javacity.world.Map;
 import javacity.world.Type;
+import javacity.world.Category;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
@@ -19,6 +20,7 @@ public class SwingToolbox extends JPanel implements MouseListener
 {
     private Map city;
     private Type type;
+    private Category cat;
     private int dragX, dragY;
     private CoordinateSystem coords;
     
@@ -36,11 +38,11 @@ public class SwingToolbox extends JPanel implements MouseListener
         this.setLayout(new GridLayout(Type.values().length,0));
         
         int i = 0;
-        for (final Type z : Type.values()) {
+        for (final Category z : Category.values()) {
             JButton button = new JButton(z.toString().toLowerCase());
             button.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
-                    type = z;
+                    cat = z;
                 }
             });
             this.add(button,0,i);
