@@ -8,6 +8,7 @@ import javacity.lib.Point;
 import javacity.ui.coordinates.CoordinateSystem;
 import javacity.world.Map;
 import javacity.world.Type;
+import javacity.world.Building;
 import javacity.world.Category;
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -82,7 +83,7 @@ public class SwingToolbox extends JPanel implements MouseListener
         for (int x = startx; x <= endx; x++) {
             for (int y = starty; y <= endy; y++) {
                 if (this.city.isValidLocation(x, y)) {
-                    this.city.getByLocation(x, y).setType(this.type);                    
+                    this.city.getByLocation(x, y).setBuilding(new Building(this.type));                    
                 }
             }
         }

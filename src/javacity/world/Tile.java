@@ -6,19 +6,11 @@ package javacity.world;
  */
 public class Tile
 {
-    private Type type;
     private Building building;
+    private Terrain terrain;
  
-    /**
-     * Set our type
-     * @param type 
-     */
-    public void setType(Type type)
-    {
-        if (type != this.type && this.hasBuilding()) {
-            this.removeBuilding();
-        }
-        this.type = type;
+    Tile() {
+        terrain = Terrain.GRASS;
     }
     
     /**
@@ -27,9 +19,6 @@ public class Tile
      */
     public void setBuilding(Building building)
     {
-        if (building.getType() != this.getType()) {
-            throw new IllegalArgumentException("Bad building type");
-        }
         this.building = building;
     }
     
@@ -52,22 +41,11 @@ public class Tile
         return this.building;
     }
     
-    /**
-     * Get our type
-     * @return 
-     */
-    public Type getType()
-    {
-        return this.type;
+    public Terrain getTerrain() {
+        return this.terrain;
     }
     
-    /**
-     * For debugging
-     * @return 
-     */
-    @Override
-    public String toString()
-    {
-        return "tile: "+this.type;
+    public void setTerrain(Terrain t) {
+        this.terrain = t;
     }
 }

@@ -1,7 +1,5 @@
 package javacity.world;
 
-import java.util.EnumMap;
-
 /**
  * A type enum for city structures.
  * Left outside of any particular class
@@ -9,7 +7,7 @@ import java.util.EnumMap;
  */
 
 public enum Type {
-    GRASS, ROAD,
+    ROAD,
     RESIDENTIAL, COMMERCIAL, INDUSTRIAL,
     POLICE, HOSPITAL, FIREHOUSE,
     POWER;
@@ -20,24 +18,3 @@ public enum Type {
         this.cat = c;
     }
 }
-
-
-
-
-/*
-public class TileType {
-    public enum Basic implements Type {
-        GRASS, ROAD
-    }
-    public enum Zone implements Type{
-        RESIDENTIAL, COMMERCIAL, INDUSTRIAL
-    }
-    public enum Civic implements Type{
-        POLICE, HOSPITAL, FIREHOUSE
-    }
-    public enum Energy implements Type {
-        POWER
-    }
-    
-    public static EnumMap<Type, String> types;
-}*/

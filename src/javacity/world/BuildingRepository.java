@@ -44,8 +44,7 @@ public class BuildingRepository
         
         int id = 0;
         for (int i = 0; i < iNames.length; i++) {
-            Building b = new Building();
-            b.setType(Type.INDUSTRIAL);
+            Building b = new Building(Type.INDUSTRIAL);
             b.setName(iNames[i]);
             industrial[i] = b;
             id += 1;
@@ -53,8 +52,7 @@ public class BuildingRepository
         }
         
         for (int i=0; i < cNames.length; i++) {
-            Building b = new Building();
-            b.setType(Type.COMMERCIAL);
+            Building b = new Building(Type.COMMERCIAL);
             b.setName(cNames[i]);
             commercial[i] = b;
             id += 1;
@@ -62,22 +60,12 @@ public class BuildingRepository
         }        
         
         for (int i = 0; i < rNames.length; i++) {
-            Building b = new Building();
-            b.setType(Type.RESIDENTIAL);
+            Building b = new Building(Type.RESIDENTIAL);
             b.setName(rNames[i]);
             residential[i] = b;
             id += 1;
             b.setId(id);
         }   
-        
-        for (int i = 0; i < pNames.length; i++) {
-            Building b = new Building();
-            b.setType(Type.POWER);
-            b.setName(pNames[i]);
-            power[i] = b;
-            id += 1;
-            b.setId(id);           
-        }
     }
     
     /**

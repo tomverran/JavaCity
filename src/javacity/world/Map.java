@@ -14,7 +14,7 @@ import java.util.ArrayList;
 public class Map
 {
     private Tile[][] grid;
-    private HashMap<Tile, Point> locations;
+    private Building[] buildings;
     
     /**
      * Construct our city.
@@ -22,14 +22,11 @@ public class Map
     public Map(int xsize, int ysize)
     {    
         this.grid = new Tile[xsize][ysize];
-        this.locations = new HashMap<Tile, Point>();
 
         for (int x = 0; x < xsize; x++) {
             for (int y = 0; y < ysize; y++) {
                 Tile t = new Tile();
                 this.grid[x][y] = t;
-                this.locations.put(t, new Point(x, y));
-                t.setType(Type.GRASS);
             }
         }
     }
@@ -42,15 +39,17 @@ public class Map
     public ArrayList<Tile> getTiles(Type type, boolean occupied)
     {
         ArrayList<Tile> tiles = new ArrayList<Tile>();
-        for (Tile t : this.locations.keySet()) {
-            if (t.getType() == type) {
-                
-                boolean occ = t.hasBuilding() && t.getBuilding().isOccupied();
-                if (occ == occupied) {
-                    tiles.add(t);                    
-                }
+        /*for(int i=0; i<grid.length; i++) {
+            for(int j=0; j<grid[i].length; j++) {
+                Tile t = grid[i][j];
+                if(t.getBuilding().getType() == type) {
+                    boolean occ = t.hasBuilding() && t.getBuilding().isOccupied();
+                    if (occ == occupied) {
+                        tiles.add(t);                    
+                    }
+                }            
             }
-        }
+        }*/
         return tiles;
     }
     
@@ -59,10 +58,7 @@ public class Map
      * @param Tile t The tile to get location of
      * @return Point2D the location
      */
-    public Point getLocationOfTile(Tile t)
-    {
-        return this.locations.get(t);
-    }
+
     
     /**
      * Get tiles by their location
@@ -116,7 +112,7 @@ public class Map
      * @param int radius the radius to find
      * @return ArrayList<Tile> of tiles
      */
-    public ArrayList<Tile> getNeighbours(Tile t, int radius)
+    /*public ArrayList<Tile> getNeighbours(Tile t, int radius)
     {
         ArrayList<Tile> ret = new ArrayList<Tile>();
         Point loc = this.getLocationOfTile(t);
@@ -135,8 +131,8 @@ public class Map
      * @param t The tile to get neigbours of
      * @return 
      */
-    public ArrayList<Tile> getNeighbours(Tile t)
+    /*public ArrayList<Tile> getNeighbours(Tile t)
     {
         return this.getNeighbours(t, 1);
-    }    
+    } */   
 }

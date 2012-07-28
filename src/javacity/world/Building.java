@@ -12,6 +12,10 @@ public class Building {
     private int wealth;
     private Type type;
     private boolean occupied;
+    
+    public Building(Type t) {
+        this.type = t;
+    }
 
     /**
      * @return the id
