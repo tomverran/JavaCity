@@ -30,4 +30,8 @@ public enum Category {
     public Set<Type> getTypes() {
         return types.keySet();
     }
+    
+    public int getCount() {
+        return types.size();
+    }
 }

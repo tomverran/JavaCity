@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.EnumMap;
 import javacity.lib.Point;
 import javacity.ui.coordinates.CoordinateSystem;
 import javacity.world.Map;
@@ -24,6 +25,7 @@ public class SwingToolbox extends JPanel implements MouseListener
     private Category cat;
     private int dragX, dragY;
     private CoordinateSystem coords;
+    private EnumMap<Category, JPanel> subCats;
     
     /**
      * Construct our SwingToolbox
@@ -35,7 +37,10 @@ public class SwingToolbox extends JPanel implements MouseListener
         super();
         this.city = city;
         this.coords = coords;
-        this.type = Type.RESIDENTIAL;        
+        this.type = Type.RESIDENTIAL; 
+        this.cat = Category.ZONE;
+        this.subCats = new EnumMap<>(Category.class);
+        
         this.setLayout(new GridLayout(Type.values().length,0));
         
         int i = 0;
@@ -43,11 +48,29 @@ public class SwingToolbox extends JPanel implements MouseListener
             JButton button = new JButton(z.toString().toLowerCase());
             button.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
+                    subCats.get(cat).setVisible(false);
                     cat = z;
+                    subCats.get(cat).setVisible(true);                   
                 }
             });
-            this.add(button,0,i);
-            i++;
+            JPanel subCat = new JPanel();
+            
+            subCat.setLayout(new GridLayout(z.getCount(), 0));
+            for(final Type t: z.getTypes()) {
+                JButton innerB = new JButton(t.name());
+                innerB.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        type = t;
+                    }
+                });
+                subCat.add(innerB);
+            }
+            this.add(button, 0, i);
+            subCats.put(z, subCat);
+            this.add(subCat, 0, i+1);
+            subCat.setVisible(false);
+            
+            i += 2;
         }
     }
     
