@@ -11,15 +11,17 @@ import java.util.Set;
  */
 public enum Category {
     BASIC(new Type[]{Type.ROAD},
-        new String[]{"Road"}),
+        new String[]{"Road"}, false),
     ZONE(new Type[]{ Type.RESIDENTIAL,  Type.COMMERCIAL,    Type.INDUSTRIAL},
-        new String[]{"Residential",     "Commercial",       "Industrial"}),
+        new String[]{"Residential",     "Commercial",       "Industrial"}, true),
     CIVIC(new Type[]{Type.POLICE,       Type.HOSPITAL,      Type.FIREHOUSE},
-        new String[]{"Police Station",  "Hospital",         "Firehouse"});
+        new String[]{"Police Station",  "Hospital",         "Firehouse"}, false);
     
     private EnumMap<Type, String> types;
+    private boolean evolving;
     
-    private Category(Type types[], String names[]) {
+    private Category(Type types[], String names[], boolean evolve) {
+        this.evolving = evolve;
         this.types = new EnumMap<>(Type.class); 
         for(int i = 0; i < types.length; i++) {
             this.types.put(types[i], names[i]);
@@ -33,5 +35,9 @@ public enum Category {
     
     public int getCount() {
         return types.size();
+    }
+    
+    public boolean isEvolving() {
+        return this.evolving;
     }
 }

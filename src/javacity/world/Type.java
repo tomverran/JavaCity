@@ -17,4 +17,8 @@ public enum Type {
     public void setCategory(Category c) {
         this.cat = c;
     }
+    
+    public Category getCategory() {
+        return this.cat;
+    }
 }

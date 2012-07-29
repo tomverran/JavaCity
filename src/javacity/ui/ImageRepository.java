@@ -19,6 +19,7 @@ public class ImageRepository {
     private HashMap<Integer, Image> buildings;
     private EnumMap<Type, Image> typeImages;
     private EnumMap<Terrain, Image> terrainImages;
+    private EnumMap<Type, Image[]> evolvingImages;
     
     /**
      * Initialise this object.
@@ -27,36 +28,28 @@ public class ImageRepository {
      */
     public ImageRepository(String set)
     {
-        /*for(Category c: Category.values()) {
-            String cat = c.toString();
-            for(Type t: c.getTypes()) {
-                tiles.put(t, ImageIO.read(new File("images/"+set+"/"+cat+"/"+t.toString()+".png")));
-            }
-        }*/
-        
-        
-        buildings = new HashMap<>();
+        typeImages = new EnumMap<>(Type.class);
+        evolvingImages = new EnumMap<>(Type.class);
         try {
-            for (int id = 1; id <= 16; id++) {
-                buildings.put(id, ImageIO.read(new File("images/"+set+"/buildings/building_"+id+".png")));
-            }            
-        } catch (Exception e) {
+            for(Category c: Category.values()) {
+                String cat = c.toString();
+                if(c.isEvolving()) {
+                    for(Type t: c.getTypes()) {
+                        Image[] img = new Image[4];
+                        for(int i=0; i<4; i++) {
+                            img[i] = ImageIO.read(new File("images/"+set+"/"+cat+"/"+t.toString()+"_"+i+".png"));
+                        }
+                        evolvingImages.put(t, img);
+                    }
+                } else {
+                    for(Type t: c.getTypes()) {
+                        typeImages.put(t, ImageIO.read(new File("images/"+set+"/"+cat+"/"+t.toString()+".png")));
+                    }
+                }
+            } 
+        } catch(Exception e) {
             
         }
-        
-        typeImages = new EnumMap<>(Type.class);
-        try {
-            for (Type t : Category.BASIC.getTypes()) {
-                String filename = t.toString().toLowerCase();
-                typeImages.put(t, ImageIO.read(new File("images/"+set+"/tiles/"+filename+".png")));            
-            }  
-            for (Type t : Category.ZONE.getTypes()) {
-                String filename = t.toString().toLowerCase();
-                typeImages.put(t, ImageIO.read(new File("images/"+set+"/tiles/"+filename+".png")));            
-            }
-        } catch (Exception e) {
-            
-        }  
         
         terrainImages = new EnumMap<>(Terrain.class);
         try {
@@ -77,6 +70,10 @@ public class ImageRepository {
         return this.terrainImages.get(t.getTerrain());
     }
     public Image getImageFor(Building b) {
-        return this.typeImages.get(b.getType());
+        if(b.getType().getCategory().isEvolving()) {
+            return this.evolvingImages.get(b.getType())[b.getLevel()];
+        } else {
+            return this.typeImages.get(b.getType());
+        }
     }
 }

@@ -12,11 +12,17 @@ public class Building {
     private int wealth;
     private Type type;
     private boolean occupied;
+    private int level;
     
     public Building(Type t) {
         this.type = t;
+        this.level = 0;
     }
 
+    public int getLevel() {
+        return this.level;
+    }
+    
     /**
      * @return the id
      */
