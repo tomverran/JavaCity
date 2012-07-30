@@ -92,14 +92,32 @@ public class SwingViewport extends Canvas implements Runnable, KeyListener {
         boolean hasGhost = false;
         Point gStart = new Point(-1, -1);
         Point gEnd = new Point(-1, -1);
-        //System.out.println(cursorData[0]+" "+cursorData[1]+" "+cursorData[2]+" "+cursorData[3]);
+        
         if(cursorData[0] != -1) {
-            gStart = coords.screenToTile(Math.min(cursorData[0], cursorData[2]),
-                                         Math.min(cursorData[1], cursorData[3]));
-            gEnd = coords.screenToTile(Math.max(cursorData[0], cursorData[2]),
-                                       Math.max(cursorData[1], cursorData[3]));
+            gStart = coords.screenToTile(cursorData[0], cursorData[1]);
+            gEnd = coords.screenToTile(cursorData[2], cursorData[3]);
+            
+            if(gStart.getX() < gEnd.getX()) {
+                if(gStart.getY() > gEnd.getY()) {
+                     int tmp = gStart.getY();
+                     gStart = new Point(gStart.getX(), gEnd.getY());                   
+                     gEnd = new Point(gEnd.getX(), tmp);
+                }               
+            } else {
+                if(gStart.getY() < gEnd.getY()) {
+                    int tmp = gStart.getX();
+                    gStart = new Point(gEnd.getX(), gStart.getY());
+                    gEnd = new Point(tmp, gEnd.getY());
+                } else {
+                    Point tmp = gStart;
+                    gStart = new Point(gEnd.getX(), gEnd.getY());
+                    gEnd = tmp;                   
+                }
+            }
+            
             hasGhost = true;
         }
+        //System.out.println("1st: "+gStart.getX()+","+gStart.getY()+" 2nd: "+gEnd.getX()+","+gEnd.getY());
         Type tool = Type.RESIDENTIAL;
         
         //loop through every X and Y coordinate with the order defined.
@@ -116,8 +134,7 @@ public class SwingViewport extends Canvas implements Runnable, KeyListener {
                 g2.drawImage(i.getImageFor(t), xPos, yPos, this);
                 
                 if(hasGhost) {
-                    if(x >= gStart.getX() && x <= gEnd.getX() &&
-                       y >= gStart.getY() && y <= gEnd.getY()) {
+                    if(x >= gStart.getX() && x <= gEnd.getX() && y >= gStart.getY() && y <= gEnd.getY()) {
                         Image img = i.getImageFor(tool);
                         int yp = yPos-(img.getHeight(this)-32);
                         g2.drawImage(img, xPos, yp, this);
@@ -131,7 +148,7 @@ public class SwingViewport extends Canvas implements Runnable, KeyListener {
                 }
             }
         }
-        
+       
         //flush the buffer to the screen
         this.getBufferStrategy().show();
     }
