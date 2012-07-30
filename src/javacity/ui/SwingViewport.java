@@ -22,16 +22,18 @@ public class SwingViewport extends Canvas implements Runnable, KeyListener {
     private ImageRepository i;
     private CoordinateSystem coords;
     private int[] cursorData;
+    private SwingInterface parent;
 
     /**
      * Construct our viewport.
      * @param c
      * @param i 
      */
-    public SwingViewport(Map c, ImageRepository i, CoordinateSystem coords, int[] cursorData)
+    public SwingViewport(Map c, ImageRepository i, CoordinateSystem coords, int[] cursorData, SwingInterface parent)
     {
         super();
         this.coords = coords;
+        this.parent = parent;
         this.c = c;
         this.i = i;
         this.cursorData = cursorData;
@@ -117,9 +119,7 @@ public class SwingViewport extends Canvas implements Runnable, KeyListener {
             
             hasGhost = true;
         }
-        //System.out.println("1st: "+gStart.getX()+","+gStart.getY()+" 2nd: "+gEnd.getX()+","+gEnd.getY());
-        Type tool = Type.RESIDENTIAL;
-        
+    
         //loop through every X and Y coordinate with the order defined.
         for (int y = yStart; (yEnd > yStart) ? y < yEnd : y > yEnd ; y+=yStep) {
             for (int x = xStart; (xEnd > xStart) ? x < xEnd : x > xEnd ; x+=xStep) {
@@ -135,7 +135,7 @@ public class SwingViewport extends Canvas implements Runnable, KeyListener {
                 
                 if(hasGhost) {
                     if(x >= gStart.getX() && x <= gEnd.getX() && y >= gStart.getY() && y <= gEnd.getY()) {
-                        Image img = i.getImageFor(tool);
+                        Image img = i.getImageFor(this.parent.getGhostType());
                         int yp = yPos-(img.getHeight(this)-32);
                         g2.drawImage(img, xPos, yp, this);
                         continue;

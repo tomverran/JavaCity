@@ -23,6 +23,7 @@ public enum Category {
     
     private Category(Type types[], String names[], boolean evolve, boolean draggable) {
         this.evolving = evolve;
+        this.draggable = draggable;
         this.types = new EnumMap<>(Type.class); 
         for(int i = 0; i < types.length; i++) {
             this.types.put(types[i], names[i]);

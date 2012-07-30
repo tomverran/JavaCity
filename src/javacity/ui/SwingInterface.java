@@ -50,7 +50,7 @@ public class SwingInterface extends JFrame implements Component, UserInterface
         
         cursorData = new int[]{-1, -1, -1, -1};
         
-        this.canvas = new SwingViewport(map, new ImageRepository(tileset), coords, cursorData);
+        this.canvas = new SwingViewport(map, new ImageRepository(tileset), coords, cursorData, this);
         this.tools = new SwingToolbox(map, coords, cursorData);
         
         this.pop = new JLabel("Population: is broken");

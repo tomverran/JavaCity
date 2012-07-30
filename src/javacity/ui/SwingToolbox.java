@@ -40,7 +40,7 @@ public class SwingToolbox extends JPanel implements MouseMotionListener, MouseLi
         this.coords = coords;
         this.cursorData = cursorData;
         
-        this.type = Type.RESIDENTIAL; 
+        this.type = Type.RESIDENTIAL;
         this.cat = Category.ZONE;
         this.subCats = new EnumMap<>(Category.class);
         
@@ -78,24 +78,25 @@ public class SwingToolbox extends JPanel implements MouseMotionListener, MouseLi
         }
     }
     
-    public void mouseExited(MouseEvent e) 
-    {
-        
-    }
-    
-    public void mouseEntered(MouseEvent e) 
-    {
-        
-    }
+    @Override
+    public void mouseExited(MouseEvent e) {}
     
     @Override
-    public void mouseMoved(MouseEvent e) {
-    }
+    public void mouseEntered(MouseEvent e) {}
+    
+    @Override
+    public void mouseMoved(MouseEvent e) {}
     
     @Override
     public void mouseDragged(MouseEvent e) {
-        this.cursorData[2] = e.getX();
-        this.cursorData[3] = e.getY();
+        if(this.cursorData[0] != -1) {
+            this.cursorData[2] = e.getX();
+            this.cursorData[3] = e.getY();
+            if(!this.type.getCategory().isDraggable()) {
+                this.cursorData[0] = this.cursorData[2];
+                this.cursorData[1] = this.cursorData[3];
+            }
+        }
     }
     
     /**
@@ -103,8 +104,8 @@ public class SwingToolbox extends JPanel implements MouseMotionListener, MouseLi
      * between the mouse start & end with the requested type
      * @param e 
      */
-    public void mouseReleased(MouseEvent e)
-    {
+    @Override
+    public void mouseReleased(MouseEvent e) {
         Point startPos = coords.screenToTile(new Point(this.cursorData[0], this.cursorData[1]));
         Point endPos = coords.screenToTile(new Point(e.getX(), e.getY()));
         
@@ -126,22 +127,22 @@ public class SwingToolbox extends JPanel implements MouseMotionListener, MouseLi
         this.cursorData[1] = -1;
         this.cursorData[2] = -1;
         this.cursorData[3] = -1;
-        
     }
     
     /**
      * Handle the mouse being pressed - save our drag start point
      * @param e 
      */
-    public void mousePressed(MouseEvent e)
-    {
+    @Override
+    public void mousePressed(MouseEvent e) {
         this.cursorData[0] = e.getX();
         this.cursorData[1] = e.getY();
+        this.cursorData[2] = e.getX();
+        this.cursorData[3] = e.getY();
     }
     
-    public void mouseClicked(MouseEvent e)
-    {
-    }
+    @Override
+    public void mouseClicked(MouseEvent e) {}
     
     public Type getGhostType() {
         return this.type;

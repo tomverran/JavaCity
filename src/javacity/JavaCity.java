@@ -18,7 +18,7 @@ public class JavaCity
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) 
+    public static void main(String args[]) 
     {    
         Map map = new Map(20,15);
         Simulation sim = new Simulation();
