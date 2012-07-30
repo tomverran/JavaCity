@@ -8,15 +8,19 @@ import javacity.lib.Point;
 public class TopDown extends CoordinateSystem 
 {
     
+    public Point screenToTile(Point screen) {
+        return screenToTile(screen.getX(), screen.getY());
+    }
+    
     /**
      * Convert from screen space to tile space
      * @param screen
      * @return 
      */
     @Override
-    public Point screenToTile(Point screen) 
+    public Point screenToTile(int x, int y) 
     {
-        return new Point((screen.getX() - xShift) / 32, (screen.getY() - yShift) / 32);
+        return new Point((x - xShift) / 32, (y - yShift) / 32);
     }
 
     /**

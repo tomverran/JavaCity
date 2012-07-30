@@ -20,17 +20,21 @@ public class Isometric extends CoordinateSystem
         this.mapSizeY = mapSizeY;
     }
     
+    public Point screenToTile(Point screen) {
+        return screenToTile(screen.getX(), screen.getY());
+    }
+    
     /**
      * Convert a screen coordinate to a tile coordinate
      * @param screen
      * @return 
      */
     @Override
-    public Point screenToTile(Point screen) 
+    public Point screenToTile(int x, int y) 
     {        
         //undo the effects of any map shifts
-        float xPos = (screen.getX() - this.xShift) / 32.0f;
-        float yPos = (screen.getY() - this.yShift) / 16.0f;
+        float xPos = (x - this.xShift) / 32.0f;
+        float yPos = (y - this.yShift) / 16.0f;
         yPos += 0.1f;
              
         yPos = yPos - mapSizeX + 1; // y - x

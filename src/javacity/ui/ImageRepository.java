@@ -69,6 +69,13 @@ public class ImageRepository {
     public Image getImageFor(Tile t) {
         return this.terrainImages.get(t.getTerrain());
     }
+    public Image getImageFor(Type t) {
+        if(t.getCategory().isEvolving()) {
+            return this.evolvingImages.get(t)[0];
+        } else {
+            return this.typeImages.get(t);
+        }
+    }
     public Image getImageFor(Building b) {
         if(b.getType().getCategory().isEvolving()) {
             return this.evolvingImages.get(b.getType())[b.getLevel()];

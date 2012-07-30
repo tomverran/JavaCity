@@ -25,6 +25,7 @@ public class SwingInterface extends JFrame implements Component, UserInterface
     private SwingToolbox tools;
     private JLabel pop;
     private City city;
+    private int[] cursorData;
     
     /**
      * Initialise our GUI, assembling a Canvas for drawing
@@ -47,8 +48,10 @@ public class SwingInterface extends JFrame implements Component, UserInterface
             tileset = "topdown";
         }
         
-        this.canvas = new SwingViewport(map, new ImageRepository(tileset), coords);
-        this.tools = new SwingToolbox(map, coords);
+        cursorData = new int[]{-1, -1, -1, -1};
+        
+        this.canvas = new SwingViewport(map, new ImageRepository(tileset), coords, cursorData);
+        this.tools = new SwingToolbox(map, coords, cursorData);
         
         this.pop = new JLabel("Population: is broken");
         
@@ -67,6 +70,7 @@ public class SwingInterface extends JFrame implements Component, UserInterface
         
         //initialise our Canvas, must be done afer adding for bufferStrategy
         this.canvas.addMouseListener(this.tools);
+        this.canvas.addMouseMotionListener(this.tools);
         this.canvas.init();
         this.pack();
 
@@ -96,5 +100,9 @@ public class SwingInterface extends JFrame implements Component, UserInterface
     public void displayMessage(String message, MessageType type) 
     {
         JOptionPane.showMessageDialog(this, message);
+    }
+    
+    public javacity.world.Type getGhostType() {
+        return this.tools.getGhostType();
     }
 }

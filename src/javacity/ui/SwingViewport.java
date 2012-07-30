@@ -10,6 +10,7 @@ import javacity.lib.Point;
 import javacity.ui.coordinates.CoordinateSystem;
 import javacity.world.Map;
 import javacity.world.Tile;
+import javacity.world.Type;
 
 /**
  * A ViewPort which, in this case, is isometric.
@@ -20,18 +21,20 @@ public class SwingViewport extends Canvas implements Runnable, KeyListener {
     private Map c;
     private ImageRepository i;
     private CoordinateSystem coords;
+    private int[] cursorData;
 
     /**
      * Construct our viewport.
      * @param c
      * @param i 
      */
-    public SwingViewport(Map c, ImageRepository i, CoordinateSystem coords)
+    public SwingViewport(Map c, ImageRepository i, CoordinateSystem coords, int[] cursorData)
     {
         super();
         this.coords = coords;
         this.c = c;
         this.i = i;
+        this.cursorData = cursorData;
     }
     
     /**
@@ -85,6 +88,20 @@ public class SwingViewport extends Canvas implements Runnable, KeyListener {
             xStep = 1;
         }
         
+        //figure out ghost info
+        boolean hasGhost = false;
+        Point gStart = new Point(-1, -1);
+        Point gEnd = new Point(-1, -1);
+        //System.out.println(cursorData[0]+" "+cursorData[1]+" "+cursorData[2]+" "+cursorData[3]);
+        if(cursorData[0] != -1) {
+            gStart = coords.screenToTile(Math.min(cursorData[0], cursorData[2]),
+                                         Math.min(cursorData[1], cursorData[3]));
+            gEnd = coords.screenToTile(Math.max(cursorData[0], cursorData[2]),
+                                       Math.max(cursorData[1], cursorData[3]));
+            hasGhost = true;
+        }
+        Type tool = Type.RESIDENTIAL;
+        
         //loop through every X and Y coordinate with the order defined.
         for (int y = yStart; (yEnd > yStart) ? y < yEnd : y > yEnd ; y+=yStep) {
             for (int x = xStart; (xEnd > xStart) ? x < xEnd : x > xEnd ; x+=xStep) {
@@ -94,16 +111,23 @@ public class SwingViewport extends Canvas implements Runnable, KeyListener {
                 int xPos = position.getX();
                 int yPos = position.getY();
 
-                g2.drawLine(40, 40, 45, 45);
-                
                 //now actually draw it.
                 Tile t = c.getByLocation(x, y);
                 g2.drawImage(i.getImageFor(t), xPos, yPos, this);
-
+                
+                if(hasGhost) {
+                    if(x >= gStart.getX() && x <= gEnd.getX() &&
+                       y >= gStart.getY() && y <= gEnd.getY()) {
+                        Image img = i.getImageFor(tool);
+                        int yp = yPos-(img.getHeight(this)-32);
+                        g2.drawImage(img, xPos, yp, this);
+                        continue;
+                    }
+                }
                 if (t.hasBuilding()) {
                     Image img = i.getImageFor(t.getBuilding());
                     int yp = yPos-(img.getHeight(this)-32);
-                    g2.drawImage(i.getImageFor(t.getBuilding()), xPos, yp, this);
+                    g2.drawImage(img, xPos, yp, this);
                 }
             }
         }

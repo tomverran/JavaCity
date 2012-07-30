@@ -54,13 +54,6 @@ public class Map
     }
     
     /**
-     * Get the location of a tile in the game world.
-     * @param Tile t The tile to get location of
-     * @return Point2D the location
-     */
-
-    
-    /**
      * Get tiles by their location
      * @param location
      * @return 

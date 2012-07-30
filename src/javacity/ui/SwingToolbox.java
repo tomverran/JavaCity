@@ -3,6 +3,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseListener;
 import java.util.EnumMap;
 import javacity.lib.Point;
@@ -18,25 +19,27 @@ import javax.swing.JPanel;
  * A class to handle GUI events and draw buttons
  * @author Tom
  */
-public class SwingToolbox extends JPanel implements MouseListener 
+public class SwingToolbox extends JPanel implements MouseMotionListener, MouseListener
 {
     private Map city;
     private Type type;
     private Category cat;
-    private int dragX, dragY;
     private CoordinateSystem coords;
     private EnumMap<Category, JPanel> subCats;
+    private int[] cursorData;
     
     /**
      * Construct our SwingToolbox
      * @param city
      * @param coords 
      */
-    public SwingToolbox(Map city, CoordinateSystem coords)
+    public SwingToolbox(Map city, CoordinateSystem coords, int[] cursorData)
     {
         super();
         this.city = city;
         this.coords = coords;
+        this.cursorData = cursorData;
+        
         this.type = Type.RESIDENTIAL; 
         this.cat = Category.ZONE;
         this.subCats = new EnumMap<>(Category.class);
@@ -71,19 +74,28 @@ public class SwingToolbox extends JPanel implements MouseListener
             subCat.setVisible(false);
             
             i += 2;
+            
         }
     }
     
-    @Override
     public void mouseExited(MouseEvent e) 
     {
         
     }
     
-    @Override
     public void mouseEntered(MouseEvent e) 
     {
         
+    }
+    
+    @Override
+    public void mouseMoved(MouseEvent e) {
+    }
+    
+    @Override
+    public void mouseDragged(MouseEvent e) {
+        this.cursorData[2] = e.getX();
+        this.cursorData[3] = e.getY();
     }
     
     /**
@@ -91,10 +103,9 @@ public class SwingToolbox extends JPanel implements MouseListener
      * between the mouse start & end with the requested type
      * @param e 
      */
-    @Override
     public void mouseReleased(MouseEvent e)
     {
-        Point startPos = coords.screenToTile(new Point(dragX, dragY));
+        Point startPos = coords.screenToTile(new Point(this.cursorData[0], this.cursorData[1]));
         Point endPos = coords.screenToTile(new Point(e.getX(), e.getY()));
         
         int startx = Math.min(startPos.getX(), endPos.getX());
@@ -111,21 +122,28 @@ public class SwingToolbox extends JPanel implements MouseListener
             }
         }
         
+        this.cursorData[0] = -1;
+        this.cursorData[1] = -1;
+        this.cursorData[2] = -1;
+        this.cursorData[3] = -1;
+        
     }
     
     /**
      * Handle the mouse being pressed - save our drag start point
      * @param e 
      */
-    @Override
     public void mousePressed(MouseEvent e)
     {
-        this.dragX = e.getX();
-        this.dragY = e.getY();
+        this.cursorData[0] = e.getX();
+        this.cursorData[1] = e.getY();
     }
     
-    @Override
     public void mouseClicked(MouseEvent e)
     {
+    }
+    
+    public Type getGhostType() {
+        return this.type;
     }
 }

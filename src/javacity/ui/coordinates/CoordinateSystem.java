@@ -17,6 +17,7 @@ public abstract class CoordinateSystem {
     protected int xShift;
     protected int yShift;
     
+    public abstract Point screenToTile(int x, int y);
     /**
      * Convert a screen position to a tile point
      * @param screen
