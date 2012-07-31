@@ -38,18 +38,21 @@ public class Map
      */
     public ArrayList<Tile> getTiles(Type type, boolean occupied)
     {
-        ArrayList<Tile> tiles = new ArrayList<Tile>();
-        /*for(int i=0; i<grid.length; i++) {
+        ArrayList<Tile> tiles = new ArrayList<>();
+        int level = occupied ? 1 : 0;
+        Building b;
+        for(int i=0; i<grid.length; i++) {
             for(int j=0; j<grid[i].length; j++) {
                 Tile t = grid[i][j];
-                if(t.getBuilding().getType() == type) {
-                    boolean occ = t.hasBuilding() && t.getBuilding().isOccupied();
-                    if (occ == occupied) {
-                        tiles.add(t);                    
+                if((b = t.getBuilding()) != null) {
+                    if(b.getType() == type) {
+                        if (t.getBuilding().getLevel() == level) {
+                            tiles.add(t);                    
+                        }
                     }
                 }            
             }
-        }*/
+        }
         return tiles;
     }
     

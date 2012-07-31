@@ -87,7 +87,6 @@ public class Building {
     public void setOccupied(boolean occupied)
     {
         this.occupied = occupied;
-    }
-    
-    
+        this.level = occupied ? 1 : 0;
+    }    
 }

@@ -120,31 +120,34 @@ public class SwingViewport extends Canvas implements Runnable, KeyListener {
             hasGhost = true;
         }
     
+        Point tilePosition;
+        int screenX, screenY, yp;
+        Tile currentTile;
         //loop through every X and Y coordinate with the order defined.
         for (int y = yStart; (yEnd > yStart) ? y < yEnd : y > yEnd ; y+=yStep) {
             for (int x = xStart; (xEnd > xStart) ? x < xEnd : x > xEnd ; x+=xStep) {
 
                 //ask our co-ordinate system where we should draw the tile
-                Point position = this.coords.tileToScreen(new Point(x, y));
-                int xPos = position.getX();
-                int yPos = position.getY();
+                tilePosition = this.coords.tileToScreen(new Point(x, y));
+                screenX = tilePosition.getX();
+                screenY = tilePosition.getY();
 
                 //now actually draw it.
-                Tile t = c.getByLocation(x, y);
-                g2.drawImage(i.getImageFor(t), xPos, yPos, this);
+                currentTile = c.getByLocation(x, y);
+                g2.drawImage(i.getImageFor(currentTile), screenX, screenY, this);
                 
                 if(hasGhost) {
                     if(x >= gStart.getX() && x <= gEnd.getX() && y >= gStart.getY() && y <= gEnd.getY()) {
                         Image img = i.getImageFor(this.parent.getGhostType());
-                        int yp = yPos-(img.getHeight(this)-32);
-                        g2.drawImage(img, xPos, yp, this);
+                        yp = screenY-(img.getHeight(this)-32);
+                        g2.drawImage(img, screenX, yp, this);
                         continue;
                     }
                 }
-                if (t.hasBuilding()) {
-                    Image img = i.getImageFor(t.getBuilding());
-                    int yp = yPos-(img.getHeight(this)-32);
-                    g2.drawImage(img, xPos, yp, this);
+                if (currentTile.hasBuilding()) {
+                    Image img = i.getImageFor(currentTile.getBuilding());
+                    yp = screenY-(img.getHeight(this)-32);
+                    g2.drawImage(img, screenX, yp, this);
                 }
             }
         }
