@@ -116,7 +116,6 @@ public class SwingViewport extends Canvas implements Runnable, KeyListener {
                     gEnd = tmp;                   
                 }
             }
-            
             hasGhost = true;
         }
     

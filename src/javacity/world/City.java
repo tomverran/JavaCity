@@ -103,8 +103,8 @@ public class City {
             if (tile.hasBuilding()) {
                 tile.getBuilding().setOccupied(true);
             } else {
-                Building building = buildings.getRandomBuilding(t);
-                tile.setBuilding(building);                 
+                //Building building = buildings.getRandomBuilding(t);
+                //tile.setBuilding(building);                 
             }          
         }
     }

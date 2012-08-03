@@ -68,13 +68,10 @@ public class SwingToolbox extends JPanel implements MouseMotionListener, MouseLi
                 });
                 subCat.add(innerB);
             }
-            this.add(button, 0, i);
+            this.add(button, 0, i++);
             subCats.put(z, subCat);
-            this.add(subCat, 0, i+1);
+            this.add(subCat, 0, i++);
             subCat.setVisible(false);
-            
-            i += 2;
-            
         }
     }
     
