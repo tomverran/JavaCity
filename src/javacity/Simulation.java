@@ -15,7 +15,7 @@ public class Simulation implements Runnable
      */
     public Simulation()
     {
-        this.components = new ArrayList<Component>();
+        this.components = new ArrayList<>();
     }
     
     /**
