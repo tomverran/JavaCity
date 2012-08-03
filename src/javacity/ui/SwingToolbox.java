@@ -42,7 +42,7 @@ public class SwingToolbox extends JPanel implements MouseMotionListener, MouseLi
         
         this.type = Type.RESIDENTIAL;
         this.cat = Category.ZONE;
-        this.subCats = new EnumMap<>(Category.class);
+        this.subCats = new EnumMap<Category, JPanel>(Category.class);
         
         this.setLayout(new GridLayout(Type.values().length,0));
         

@@ -28,8 +28,8 @@ public class ImageRepository {
      */
     public ImageRepository(String set)
     {
-        typeImages = new EnumMap<>(Type.class);
-        evolvingImages = new EnumMap<>(Type.class);
+        typeImages = new EnumMap<Type, Image>(Type.class);
+        evolvingImages = new EnumMap<Type, Image[]>(Type.class);
         try {
             for(Category c: Category.values()) {
                 String cat = c.toString();
@@ -51,7 +51,7 @@ public class ImageRepository {
             
         }
         
-        terrainImages = new EnumMap<>(Terrain.class);
+        terrainImages = new EnumMap<Terrain, Image>(Terrain.class);
         try {
             for(Terrain t: Terrain.values()) {
                 terrainImages.put(t, ImageIO.read(new File("images/"+set+"/terrain/"+t.toString().toLowerCase()+".png")));

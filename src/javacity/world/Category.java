@@ -9,7 +9,8 @@ import java.util.Set;
  *
  * @author Ali
  */
-public enum Category {
+public enum Category 
+{
     BASIC(new Type[]{Type.ROAD},
         new String[]{"Road"}, false, true),
     ZONE(new Type[]{ Type.RESIDENTIAL,  Type.COMMERCIAL,    Type.INDUSTRIAL},
@@ -24,7 +25,7 @@ public enum Category {
     private Category(Type types[], String names[], boolean evolve, boolean draggable) {
         this.evolving = evolve;
         this.draggable = draggable;
-        this.types = new EnumMap<>(Type.class); 
+        this.types = new EnumMap<Type, String>(Type.class); 
         for(int i = 0; i < types.length; i++) {
             this.types.put(types[i], names[i]);
             types[i].setCategory(this);

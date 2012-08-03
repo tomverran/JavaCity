@@ -38,7 +38,7 @@ public class Map
      */
     public ArrayList<Tile> getTiles(Type type, boolean occupied)
     {
-        ArrayList<Tile> tiles = new ArrayList<>();
+        ArrayList<Tile> tiles = new ArrayList<Tile>();
         int level = occupied ? 1 : 0;
         Building b;
         for(int i=0; i<grid.length; i++) {
